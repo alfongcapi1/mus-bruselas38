@@ -1018,7 +1018,7 @@ function renderInicio(){
       return '<div class="pod-item" onclick="openPlayer(\''+p.name+'\')"><div class="pod-avatar">'+avHTML(p.name)+'</div><div class="pod-name">'+(isC?'👑 ':'')+p.name+'</div><div class="pod-pct">'+pctS(p.g,p.j)+'</div><div class="pod-block"></div></div>';
     }).join('')+'</div>';
   }
-  renderClassTable(pl,'ctable-main',true,true);
+  renderClassTable(pl,'ctable-main',true,true,true);
   document.getElementById('pstrip').innerHTML=REAL.map(n=>{const f=pl.find(x=>x.name===n)||{g:0,j:0,p:0};return '<div class="pchip" onclick="openPlayer(\''+n+'\')"><div class="pchip-av">'+avHTML(n)+'</div><div class="pchip-name">'+n+'</div><div class="pchip-pct '+(f.j>0?'':'nd')+'">'+( f.j>0?pctS(f.g,f.j):'Sin partidas')+'</div></div>';}).join('');
   renderCompStrip();
 }
@@ -1058,17 +1058,20 @@ function renderCompResult(){
   cr.innerHTML=html;
 }
 
-function renderClassTable(pl,id,arrow,showAll){
+function renderClassTable(pl,id,arrow,showAll,showBadge){
   const el=document.getElementById(id);const list=showAll?pl:pl.filter(p=>p.j>0);if(!list.length){el.innerHTML='';return;}
   const withG=list.filter(p=>p.j>0);const maxG=Math.max(...withG.map(p=>p.g),1);
   el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">%</div></div>'+
-  list.map((p)=>{const rank=withG.indexOf(p);return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
-    '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+( p.j>0?(rank+1):'-')+'</div>'+
-    '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+'</div>'+
+  list.map(function(p){const rank=withG.indexOf(p);
+    const nextMult=showBadge&&liveStats[p.name]&&liveStats[p.name].j>0?getMultiplier(liveStats[p.name].j+1).toFixed(3):'';
+    const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:1px 4px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:4px;">×'+nextMult+'</span>':'';
+    return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
+    '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
+    '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
     '</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>'+
     '<div class="cpct '+(p.j>0?'has':'')+'">'+pctS(p.g,p.j)+'</div>'+
     (arrow?'<div class="carr">›</div>':'')+
-  '</div>';}).join('');
+    '</div>';}).join('');
 }
 
 function renderPartidas(){
@@ -1379,7 +1382,7 @@ function renderHistorico(){
   if(!pl.length){hp.innerHTML='<div class="pod-empty"><div class="pod-empty-row"><div class="pod-empty-av">🥈</div><div class="pod-empty-av big">🥇</div><div class="pod-empty-av">🥉</div></div></div>';}
   else{const top3=pl.slice(0,3);const ord=top3.length>=3?[top3[1],top3[0],top3[2]]:top3.length===2?[top3[1],top3[0]]:[top3[0]];hp.innerHTML='<div class="podium">'+ord.map((p,i)=>{const isC=(top3.length>=2&&i===1)||(top3.length===1&&i===0);return '<div class="pod-item"><div class="pod-avatar">'+avHTML(p.name)+'</div><div class="pod-name">'+(isC?'👑 ':'')+p.name+'</div><div class="pod-pct">'+pctS(p.g,p.j)+'</div><div class="pod-block"></div></div>';}).join('')+'</div>';}
   renderClassTable(pl,'ctable-hist',false,false);
-  renderPairs(getHistPairs(histSel),'hist-bw','hist-ptable');
+  setTimeout(renderHistExtras,50);
 }
 
 let playerMatchTab='win';
