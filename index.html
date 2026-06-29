@@ -658,6 +658,7 @@ function showWelcome(name){
     <div class="mpct-big"><div class="mpct-n" id="mp-pct">—</div><div class="mpct-l">Promedio de Victorias</div></div>
     <div class="mpbar-w"><div class="mpbar-t"><div class="mpbar-f" id="mp-bar" style="width:0%"></div></div></div>
     <div class="mstats" id="mp-stats"></div>
+    <div id="mp-score-breakdown" style="display:none;margin-bottom:14px;"></div>
     <div class="mhist-t">Historial por temporada</div>
     <div id="mp-hist"></div>
   </div>
@@ -1104,14 +1105,9 @@ function renderClassTable(pl,id,arrow,showAll,showBadge){
     const formula=tramoBreak
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
     '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
-    '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+formula+
+    '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
     '</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>'+
-    '<div class="cpct '+(p.j>0?'has':'')+'" style="display:flex;flex-direction:column;align-items:flex-end;gap:0px;">'+
-      (showBadge&&ls&&ls.j>0?
-        '<span style="font-family:Oswald,sans-serif;font-size:16px;font-weight:700;color:var(--va);">'+((ls.score||0)*100).toFixed(1)+'%</span>'+
-        '<span style="font-size:9px;color:rgba(255,255,255,0.3);">'+pctS(p.g,p.j)+' base</span>':
-        pctS(p.g,p.j))+
-      '</div>'+
+    '<div class="cpct '+(p.j>0?'has':'')+'">'+( showBadge&&ls&&ls.j>0?((ls.score||0)*100).toFixed(1)+'%':pctS(p.g,p.j))+'</div>'+
     (arrow?'<div class="carr">›</div>':'')+
     '</div>';}).join('');
 }
@@ -1461,6 +1457,43 @@ function openPlayer(name){
     '<div class="msbox" style="cursor:pointer" onclick="openPlayerMatches(\''+name+'\',\'win\')"><div class="msbox-v" style="color:var(--va)">'+p.g+'</div><div class="msbox-l">Ganadas</div><div style="font-size:9px;color:rgba(255,255,255,0.25);margin-top:2px">ver →</div></div>'+
     '<div class="msbox" style="cursor:pointer" onclick="openPlayerMatches(\''+name+'\',\'loss\')"><div class="msbox-v" style="color:#e57373">'+(p.j-p.g)+'</div><div class="msbox-l">Perdidas</div><div style="font-size:9px;color:rgba(255,255,255,0.25);margin-top:2px">ver →</div></div>'+
     '<div class="msbox"><div class="msbox-v">'+p.j+'</div><div class="msbox-l">Jugadas</div></div>';
+  // Score breakdown for 2026-27
+  const ls2627=liveStats[name];
+  const scoreEl=document.getElementById('mp-score-breakdown');
+  if(scoreEl&&ls2627&&ls2627.j>0){
+    const tramoNames=['×1.000','×1.010','×1.020','×1.030','×1.040','×1.050','×1.060'];
+    const tw=ls2627.tramoWins||{};
+    const rows2=Object.entries(tw).map(([t,d])=>{
+      const mult=tramoNames[parseInt(t)]||('×'+(1+parseInt(t)*0.01).toFixed(3));
+      const pts=(d.g*parseFloat(mult.replace('×',''))).toFixed(2);
+      return '<div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:4px;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px;">'+
+        '<div style="color:rgba(255,255,255,0.5);">Tramo '+(parseInt(t)+1)+' <span style="color:var(--va);font-size:10px;">'+mult+'</span></div>'+
+        '<div style="text-align:center;font-weight:700;">'+d.g+'</div>'+
+        '<div style="text-align:center;color:rgba(255,255,255,0.4);">×'+parseFloat(mult.replace('×','')).toFixed(3)+'</div>'+
+        '<div style="text-align:right;color:var(--va);font-weight:700;">'+pts+'</div>'+
+        '</div>';
+    }).join('');
+    const total=(ls2627.scoreSum||0).toFixed(2);
+    const scoreVal=((ls2627.score||0)*100).toFixed(1);
+    scoreEl.innerHTML=
+      '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Puntuación 2026-2027</div>'+
+      '<div style="background:rgba(0,0,0,0.2);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">'+
+        '<div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:4px;padding:6px 10px;background:rgba(0,0,0,0.2);">'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.3);">TRAMO</div>'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;">VIC</div>'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;">MULT</div>'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:right;">PTS</div>'+
+        '</div>'+
+        rows2+
+        '<div style="display:grid;grid-template-columns:1fr auto;gap:4px;padding:8px 10px;background:rgba(58,175,92,0.08);border-top:1px solid rgba(58,175,92,0.2);">'+
+          '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+ls2627.j+' partidas</div>'+
+          '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+scoreVal+'%</div>'+
+        '</div>'+
+      '</div>';
+    scoreEl.style.display='block';
+  } else if(scoreEl){
+    scoreEl.style.display='none';
+  }
   // 1. Current season 2026-27 first (LIVE)
   let h='';
   if(p.j>0)h+='<div class="hrow"><div class="hrow-s">2026-2027 <span style="color:var(--va);font-size:9px">●</span></div><div class="hrow-st">'+p.g+'/'+p.j+'</div><div class="hrow-p">'+pctS(p.g,p.j)+'</div></div>';
