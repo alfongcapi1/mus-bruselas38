@@ -560,7 +560,7 @@ function showWelcome(name){
 
   </div>
   <div class="tab-panel" id="tab-reglamento">
-    <div style="display:flex;gap:8px;margin-bottom:12px;">
+    <div style="display:flex;gap:8px;margin-bottom:12px;margin-top:16px;">
       <button class="htab active" id="rtab-btn-juego" onclick="setReglaTab('juego',this)">Reglas del Juego</button>
       <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Sistema de Puntos 2026-2027</button>
     </div>
@@ -941,6 +941,11 @@ function computeStats(){
           liveStats[p].g++;
           const mult=getMultiplier(matchCount[p]);
           liveStats[p].scoreSum=(liveStats[p].scoreSum||0)+mult;
+          // Track wins per tramo
+          const tramo=matchCount[p]<=50?0:Math.floor((matchCount[p]-51)/25)+1;
+          if(!liveStats[p].tramoWins)liveStats[p].tramoWins={};
+          if(!liveStats[p].tramoWins[tramo])liveStats[p].tramoWins[tramo]={g:0,mult:mult};
+          liveStats[p].tramoWins[tramo].g++;
         }
         // Update weighted average after each match
         liveStats[p].score=liveStats[p].j>0?(liveStats[p].scoreSum||0)/liveStats[p].j:0;
@@ -1089,11 +1094,24 @@ function renderClassTable(pl,id,arrow,showAll,showBadge){
   list.map(function(p){const rank=withG.indexOf(p);
     const nextMult=showBadge&&liveStats[p.name]&&liveStats[p.name].j>0?getMultiplier(liveStats[p.name].j+1).toFixed(3):'';
     const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:1px 4px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:4px;">×'+nextMult+'</span>':'';
+    const ls=liveStats[p.name];
+    const tramoBreak=(()=>{
+      if(!showBadge||!ls||!ls.tramoWins)return '';
+      const tramoNames=['×1.000','×1.010','×1.020','×1.030','×1.040','×1.050','×1.060'];
+      const parts=Object.entries(ls.tramoWins).map(([t,d])=>d.g+'vic '+tramoNames[t]).join(' + ');
+      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+ls.j+'J</div>';
+    })();
+    const formula=tramoBreak
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
     '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
-    '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
+    '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+formula+
     '</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>'+
-    '<div class="cpct '+(p.j>0?'has':'')+'">'+pctS(p.g,p.j)+'</div>'+
+    '<div class="cpct '+(p.j>0?'has':'')+'" style="display:flex;flex-direction:column;align-items:flex-end;gap:0px;">'+
+      (showBadge&&ls&&ls.j>0?
+        '<span style="font-family:Oswald,sans-serif;font-size:16px;font-weight:700;color:var(--va);">'+((ls.score||0)*100).toFixed(1)+'%</span>'+
+        '<span style="font-size:9px;color:rgba(255,255,255,0.3);">'+pctS(p.g,p.j)+' base</span>':
+        pctS(p.g,p.j))+
+      '</div>'+
     (arrow?'<div class="carr">›</div>':'')+
     '</div>';}).join('');
 }
