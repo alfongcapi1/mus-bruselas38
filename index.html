@@ -556,12 +556,15 @@ function showWelcome(name){
     <div id="hist-podium"></div>
     <div class="sec">Clasificación Individual</div>
     <div class="ctable" id="ctable-hist"></div>
-    <div class="sec">Clasificación por Parejas</div>
-    <div class="pairs-filter" id="hist-pairs-filter"></div>
-    <div class="bw" id="hist-bw"></div>
-    <div class="ptable" id="hist-ptable"></div>
+    <div id="hist-extras"></div>
+
   </div>
   <div class="tab-panel" id="tab-reglamento">
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <button class="htab active" id="rtab-btn-juego" onclick="setReglaTab('juego',this)">Reglas del Juego</button>
+      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Sistema de Puntos</button>
+    </div>
+    <div id="rtab-juego">
     <div class="sec">Liga Mus Bruselas 38</div>
     <div class="regl-card">
       <div class="regl-row"><span class="regl-icon">📅</span><div><div class="regl-lbl">Temporada</div><div class="regl-val">2026-2027 · 01/09/2026 – 30/06/2027</div></div></div>
@@ -581,6 +584,58 @@ function showWelcome(name){
     <div class="sec">Estado de Jugadores</div>
     <div class="regl-hint">Días desde la última partida registrada</div>
     <div id="regl-players"></div>
+    </div><!-- rtab-juego -->
+
+    <div id="rtab-puntos" style="display:none;">
+      <div class="sec">Sistema de Puntos 2026-2027</div>
+      <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:14px;">
+          En 2026-2027 se usa un <strong style="color:var(--va);">promedio ponderado progresivo</strong>. El sistema premia a quien más juega: cuantas más partidas llevas, más valen tus victorias. Así, dos jugadores con el mismo porcentaje de victorias no empatan — gana quien más ha participado.
+        </p>
+        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;margin-bottom:14px;border-left:3px solid var(--va);">
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Fórmula</div>
+          <div style="font-family:Oswald,sans-serif;font-size:15px;color:var(--va);margin-bottom:4px;">Puntuación = Σ(multiplicador de cada victoria) ÷ partidas jugadas</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">Igual que el promedio normal, pero cada victoria suma su multiplicador en vez de 1.</div>
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplos comparativos</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador A — 50 partidas, 30 victorias</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">Todas en tramo ×1.000 → suma = 30 × 1.000 = <strong style="color:var(--va);">30.0</strong><br>Puntuación = 30.0 ÷ 50 = <strong style="color:var(--va);">0.600</strong> (60.0%)</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador B — 100 partidas, 60 victorias</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 victorias en ×1.005 + 10 victorias en ×1.010<br>Suma = 30.0 + 20.1 + 10.1 = <strong style="color:var(--va);">60.2</strong><br>Puntuación = 60.2 ÷ 100 = <strong style="color:var(--va);">0.602</strong> (60.2%)</div>
+          </div>
+        </div>
+        <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);">
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;">
+            🏆 Ambos tienen el <strong style="color:rgba(255,255,255,0.8);">mismo % de victorias (60%)</strong>, pero el Jugador B tiene una puntuación ligeramente superior por haber jugado más. El <strong style="color:var(--va);">ganador de la liga será quien tenga la mayor puntuación acumulada al final de temporada</strong>.
+          </div>
+        </div>
+        <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:rgba(0,0,0,0.3);padding:8px 12px;">
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;">TRAMO</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-align:center;">PARTIDAS</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-align:right;">MULTIPLICADOR</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">1º</div><div style="font-size:13px;font-weight:600;text-align:center;">1 – 50</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.000</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">2º</div><div style="font-size:13px;font-weight:600;text-align:center;">51 – 75</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.005</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">3º</div><div style="font-size:13px;font-weight:600;text-align:center;">76 – 100</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.010</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">4º</div><div style="font-size:13px;font-weight:600;text-align:center;">101 – 125</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.015</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">5º</div><div style="font-size:13px;font-weight:600;text-align:center;">126 – 150</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.020</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">6º</div><div style="font-size:13px;font-weight:600;text-align:center;">151 – 175</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.025</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">…</div><div style="font-size:13px;font-weight:600;text-align:center;">+25 partidas</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">+×0.005</div></div>
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(58,175,92,0.08);border-radius:8px;border-left:3px solid var(--va);">
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">
+            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo:</strong> Si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.005</strong> en vez de ×1.000.<br>
+            📌 Las temporadas anteriores (2024-25, 2025-26) se siguen midiendo por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>.<br>
+            📌 El ganador de la liga 2026-27 es quien tenga la <strong style="color:rgba(255,255,255,0.8);">mayor puntuación acumulada</strong>.
+          </div>
+        </div>
+      </div>
+    </div><!-- rtab-puntos -->
   </div>
 </div>
 
@@ -825,21 +880,70 @@ function parseSheet(csv){
   computeStats();
 }
 function parseCSV(l){const r=[];let cur='',q=false;for(let c of l){if(c==='"'){q=!q;}else if(c===','&&!q){r.push(cur);cur='';}else cur+=c;}r.push(cur);return r;}
+// Progressive multiplier for 2026-2027
+// Every 25 matches beyond 50, multiplier increases by 0.005
+function getMultiplier(matchNum){
+  if(matchNum<=50) return 1.000;
+  const extra=matchNum-50;
+  const tramo=Math.floor((extra-1)/25);
+  return 1.000+(tramo+1)*0.005;
+}
+
 function computeStats(){
-  liveStats={};livePairs={};REAL.forEach(p=>{liveStats[p]={g:0,j:0};});
+  liveStats={};livePairs={};
+  // Track match count per player for progressive scoring
+  const matchCount={};
+  const scoreSum={};
+  REAL.forEach(p=>{liveStats[p]={g:0,j:0,score:0};matchCount[p]=0;scoreSum[p]=0;});
+
   rows.forEach(row=>{
     const p1w=row.ganador==='Pareja 1';
     [{pl:[row.p1a,row.p1b],win:p1w},{pl:[row.p2a,row.p2b],win:!p1w}].forEach(t=>{
+      // Pairs stats (no multiplier for pairs)
       const vp=t.pl.filter(p=>p&&p!=='Castigo'&&REAL.includes(p));
-      if(vp.length===2){const k=[...vp].sort().join(' · ');if(!livePairs[k])livePairs[k]={g:0,j:0};livePairs[k].j++;if(t.win)livePairs[k].g++;}
-      t.pl.forEach(p=>{if(!p||p==='Castigo')return;if(!liveStats[p])liveStats[p]={g:0,j:0};liveStats[p].j++;if(t.win)liveStats[p].g++;});
+      if(vp.length===2){
+        const k=[...vp].sort().join(' · ');
+        if(!livePairs[k])livePairs[k]={g:0,j:0};
+        livePairs[k].j++;
+        if(t.win)livePairs[k].g++;
+      }
+      // Player stats with progressive multiplier
+      t.pl.forEach(p=>{
+        if(!p||p==='Castigo')return;
+        if(!liveStats[p])liveStats[p]={g:0,j:0,score:0};
+        matchCount[p]=(matchCount[p]||0)+1;
+        liveStats[p].j++;
+        if(t.win){
+          liveStats[p].g++;
+          const mult=getMultiplier(matchCount[p]);
+          liveStats[p].scoreSum=(liveStats[p].scoreSum||0)+mult;
+        }
+        // Update weighted average after each match
+        liveStats[p].score=liveStats[p].j>0?(liveStats[p].scoreSum||0)/liveStats[p].j:0;
+      });
     });
   });
 }
 function pct(g,j){return j?g/j:0;}
 function pctS(g,j){return j?(g/j*100).toFixed(1)+'%':'—';}
 function avHTML(name){return PHOTOS[name]?'<img src="'+PHOTOS[name]+'" alt="'+name+'">':name[0];}
-function getLive(){return REAL.map(n=>{const s=liveStats[n]||{g:0,j:0};return{name:n,g:s.g,j:s.j,p:pct(s.g,s.j)};}).sort((a,b)=>b.p-a.p);}
+function getLive(){
+  return REAL.map(n=>{
+    const s=liveStats[n]||{g:0,j:0,score:0};
+    const score=s.score||0;
+    return{name:n,g:s.g,j:s.j,p:pct(s.g,s.j),score:score};
+  }).sort((a,b)=>{
+    // Sort by weighted avg score for 2026-27
+    if(a.j>0&&b.j>0) return b.score-a.score;
+    return b.p-a.p;
+  });
+}
+// Get score display for a player
+function getScoreDisplay(name){
+  const s=liveStats[name]||{score:0,j:0};
+  if(!s.j)return '—';
+  return (s.score||0).toFixed(2);
+}
 function getHistPlayers(s){
   if(s==='all'){const m={};['2024-2025','2025-2026'].forEach(ss=>{(HIST[ss]||[]).forEach(p=>{if(!m[p.name])m[p.name]={name:p.name,g:0,j:0};m[p.name].g+=p.g;m[p.name].j+=p.j;});});REAL.forEach(n=>{const st=liveStats[n]||{g:0,j:0};if(st.j>0){if(!m[n])m[n]={name:n,g:0,j:0};m[n].g+=st.g;m[n].j+=st.j;}});return Object.values(m).map(p=>({...p,p:pct(p.g,p.j)})).sort((a,b)=>b.p-a.p);}
   if(s==='2026-2027')return getLive().filter(p=>p.j>0);
@@ -1111,6 +1215,164 @@ function renderPairsPage(pairs,ptId,page){
   const more=shown.length<pairs.length?'<div style="text-align:center;padding:10px;grid-column:span 3;"><button onclick="renderPairsPage(window._pairsData.get(\''+ptId+'\'),\''+ptId+'\','+(pg+1)+')" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);padding:8px 20px;border-radius:8px;font-family:Oswald,sans-serif;font-size:13px;cursor:pointer;">Ver más ('+(pairs.length-shown.length)+' restantes)</button></div>':'';
   pt2.innerHTML='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:4px 0;">'+rows2+more+'</div>';
 }
+function setReglaTab(tab,btn){
+  document.querySelectorAll('#rtab-juego,#rtab-puntos').forEach(el=>el.style.display='none');
+  document.getElementById('rtab-'+tab).style.display='block';
+  document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+function renderHistExtras(){
+  const el=document.getElementById('hist-extras');
+  if(!el){setTimeout(renderHistExtras,200);return;}
+  // Get all rows for selected season
+  const isAll=histSel==='all';
+  const histRows=isAll?rows:[...rows].filter(r=>fmtSeason(r.fecha)===histSel);
+
+  // Build per-player stats from live rows
+  const stats={};
+  REAL.forEach(n=>stats[n]={name:n,streak:0,maxStreak:0,lastWin:null,vsLoss:{},vsWith:{},bestSeason:null,worstSeason:null});
+
+  // Streak and h2h from live rows
+  const playerRows={};
+  REAL.forEach(n=>playerRows[n]=[]);
+  histRows.forEach(r=>{
+    const p1w=r.ganador==='Pareja 1';
+    [{pl:[r.p1a,r.p1b],win:p1w},{pl:[r.p2a,r.p2b],win:!p1w}].forEach(t=>{
+      t.pl.forEach(p=>{
+        if(!REAL.includes(p))return;
+        playerRows[p].push({win:t.win,with:t.pl.filter(x=>x!==p&&REAL.includes(x))[0],vs:(t.win?[r.p2a,r.p2b]:[r.p1a,r.p1b]).filter(x=>REAL.includes(x))});
+      });
+    });
+  });
+
+  // Calculate streaks and h2h
+  REAL.forEach(n=>{
+    let cur=0,max=0;
+    playerRows[n].forEach(m=>{
+      if(m.win){cur++;max=Math.max(max,cur);}else cur=0;
+      // Rival stats
+      m.vs.forEach(v=>{
+        if(!stats[n].vsLoss[v])stats[n].vsLoss[v]={l:0,g:0,j:0};
+        stats[n].vsLoss[v].j++;
+        if(!m.win)stats[n].vsLoss[v].l++;
+        if(m.win)stats[n].vsLoss[v].g++;
+      });
+      // Partner stats
+      if(m.with){
+        if(!stats[n].vsWith[m.with])stats[n].vsWith[m.with]={g:0,j:0};
+        stats[n].vsWith[m.with].j++;
+        if(m.win)stats[n].vsWith[m.with].g++;
+      }
+    });
+    stats[n].maxStreak=max;
+  });
+
+  // Best/worst season per player (from HIST + live)
+  const allSeasons=['2024-2025','2025-2026','2026-2027'];
+  REAL.forEach(n=>{
+    let best=null,worst=null;
+    allSeasons.forEach(s=>{
+      let g=0,j=0;
+      if(s==='2026-2027'){const ls=liveStats[n]||{g:0,j:0};g=ls.g;j=ls.j;}
+      else{const sp=(HIST[s]||[]).find(x=>x.name===n);if(sp){g=sp.g;j=sp.j;}}
+      if(j<10)return;
+      const p=j?g/j:0;
+      if(!best||p>best.p)best={s,g,j,p};
+      if(!worst||p<worst.p)worst={s,g,j,p};
+    });
+    stats[n].bestSeason=best;
+    stats[n].worstSeason=worst;
+  });
+
+  // Render
+  let html='';
+
+  // Racha máxima
+  if(histRows.length){
+    const streaks=REAL.map(n=>({name:n,streak:stats[n].maxStreak})).filter(x=>x.streak>0).sort((a,b)=>b.streak-a.streak);
+    if(streaks.length){
+      html+='<div class="sec" style="margin-top:16px;">🔥 Racha Máxima de Victorias</div>';
+      html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:4px;">';
+      streaks.forEach((s,i)=>{
+        const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
+        const av=PHOTOS[s.name]?'<img src="'+PHOTOS[s.name]+'" style="'+imgS+'">':s.name[0];
+        html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;text-align:center;">'+
+          '<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.1);margin:0 auto 6px;">'+av+'</div>'+
+          '<div style="font-size:12px;font-weight:700;margin-bottom:4px;">'+s.name+'</div>'+
+          '<div style="font-family:Oswald,sans-serif;font-size:22px;font-weight:700;color:#ff9800;">'+s.streak+'</div>'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.3);">victorias seguidas</div>'+
+          '</div>';
+      });
+      html+='</div>';
+    }
+  }
+
+  // Mejor y peor temporada (only in all-time view)
+  if(isAll){
+    html+='<div class="sec" style="margin-top:16px;">📈 Mejor y Peor Temporada</div>';
+    html+='<div style="display:flex;flex-direction:column;gap:6px;">';
+    REAL.forEach(n=>{
+      const b=stats[n].bestSeason,w=stats[n].worstSeason;
+      if(!b)return;
+      const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
+      const av=PHOTOS[n]?'<img src="'+PHOTOS[n]+'" style="'+imgS+'">':n[0];
+      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;">'+
+        '<div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av+'</div>'+
+        '<div style="font-size:13px;font-weight:700;flex:1;">'+n+'</div>'+
+        '<div style="text-align:right;font-size:11px;"><span style="color:var(--va);">↑ '+b.s.replace('-20','-')+' ('+pctS(b.g,b.j)+')</span><br>'+(w&&w.s!==b.s?'<span style="color:#e57373;">↓ '+w.s.replace('-20','-')+' ('+pctS(w.g,w.j)+')</span>':'')+'</div>'+
+        '</div>';
+    });
+    html+='</div>';
+  }
+
+  // Rival más difícil
+  if(histRows.length){
+    html+='<div class="sec" style="margin-top:16px;">😤 Rival más difícil</div>';
+    html+='<div style="display:flex;flex-direction:column;gap:6px;">';
+    REAL.forEach(n=>{
+      const rivals=Object.entries(stats[n].vsLoss).filter(([v,d])=>d.j>=3).sort((a,b)=>b[1].l/b[1].j-a[1].l/a[1].j);
+      if(!rivals.length)return;
+      const [rival,d]=rivals[0];
+      const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
+      const av1=PHOTOS[n]?'<img src="'+PHOTOS[n]+'" style="'+imgS+'">':n[0];
+      const av2=PHOTOS[rival]?'<img src="'+PHOTOS[rival]+'" style="'+imgS+'">':rival[0];
+      const lossRate=Math.round(d.l/d.j*100);
+      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
+        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av1+'</div>'+
+        '<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
+        '<div style="font-size:11px;color:rgba(255,255,255,0.4);">pierde '+lossRate+'% vs</div>'+
+        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av2+'</div>'+
+        '<div style="font-size:12px;font-weight:700;color:#e57373;">'+rival+'</div>'+
+        '</div>';
+    });
+    html+='</div>';
+  }
+
+  // Compañero favorito
+  if(histRows.length){
+    html+='<div class="sec" style="margin-top:16px;">🤝 Mejor compañero</div>';
+    html+='<div style="display:flex;flex-direction:column;gap:6px;">';
+    REAL.forEach(n=>{
+      const partners=Object.entries(stats[n].vsWith).filter(([v,d])=>d.j>=3).sort((a,b)=>b[1].g/b[1].j-a[1].g/a[1].j);
+      if(!partners.length)return;
+      const [partner,d]=partners[0];
+      const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
+      const av1=PHOTOS[n]?'<img src="'+PHOTOS[n]+'" style="'+imgS+'">':n[0];
+      const av2=PHOTOS[partner]?'<img src="'+PHOTOS[partner]+'" style="'+imgS+'">':partner[0];
+      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
+        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av1+'</div>'+
+        '<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
+        '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+pctS(d.g,d.j)+' con</div>'+
+        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av2+'</div>'+
+        '<div style="font-size:12px;font-weight:700;color:var(--va);">'+partner+'</div>'+
+        '</div>';
+    });
+    html+='</div>';
+  }
+
+  el.innerHTML=html;
+}
+
 function setHist(s,btn){histSel=s;histPairsFilter=null;document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderHistorico();}
 function renderHistorico(){
   const pl=getHistPlayers(histSel);const hp=document.getElementById('hist-podium');
