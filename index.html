@@ -747,6 +747,30 @@ const HIST_JUEGOS={
   '2025-2026':{}
 };
 
+const HIST_H2H={
+  '2024-2025':{
+    'Elorza':{'Fon':{l:12,j:12},'Joaco':{l:6,j:9},'Juande':{l:1,j:7},'Solís':{l:12,j:15},'Toni':{l:1,j:2}},
+    'Fon':{'Elorza':{l:0,j:12},'Joaco':{l:3,j:30},'Juande':{l:2,j:23},'Solís':{l:15,j:32},'Toni':{l:10,j:30}},
+    'Joaco':{'Elorza':{l:3,j:9},'Fon':{l:27,j:30},'Juande':{l:4,j:7},'Solís':{l:25,j:30},'Toni':{l:7,j:9}},
+    'Juande':{'Elorza':{l:6,j:7},'Fon':{l:21,j:23},'Joaco':{l:3,j:7},'Solís':{l:19,j:26},'Toni':{l:5,j:11}},
+    'Solís':{'Elorza':{l:3,j:15},'Fon':{l:17,j:32},'Joaco':{l:5,j:30},'Juande':{l:7,j:26},'Toni':{l:2,j:17}},
+    'Toni':{'Elorza':{l:1,j:2},'Fon':{l:20,j:30},'Joaco':{l:2,j:9},'Juande':{l:6,j:11},'Solís':{l:15,j:17}}
+  },
+  '2025-2026':{}
+};
+const HIST_PARTNER={
+  '2024-2025':{
+    'Elorza':{'Fon':{g:5,j:9},'Joaco':{g:1,j:2},'Juande':{g:1,j:4},'Solís':{g:2,j:3}},
+    'Fon':{'Elorza':{g:5,j:9},'Joaco':{g:6,j:10},'Juande':{g:8,j:12},'Solís':{g:25,j:36},'Toni':{g:2,j:4}},
+    'Joaco':{'Elorza':{g:1,j:2},'Fon':{g:6,j:10},'Juande':{g:1,j:6},'Solís':{g:5,j:10},'Toni':{g:3,j:11}},
+    'Juande':{'Elorza':{g:1,j:4},'Fon':{g:8,j:12},'Joaco':{g:1,j:6},'Solís':{g:1,j:5}},
+    'Solís':{'Elorza':{g:2,j:3},'Fon':{g:25,j:36},'Joaco':{g:5,j:10},'Juande':{g:1,j:5},'Toni':{g:9,j:17}},
+    'Toni':{'Fon':{g:2,j:4},'Joaco':{g:3,j:11},'Solís':{g:9,j:17}}
+  },
+  '2025-2026':{}
+};
+
+
 const HIST_PAIRS={
   '2024-2025':[
     {name:'Fon · Solís',g:20,j:30},
@@ -1228,57 +1252,64 @@ function renderHistExtras(){
   const el=document.getElementById('hist-extras');
   if(!el){setTimeout(renderHistExtras,200);return;}
 
-  // Build combined h2h stats from HIST_PAIRS + live rows
-  // For each player pair, we know g/j - derive individual h2h
-  const h2h={}; // h2h[playerA][playerB] = {asTeam:{g,j}, vsRival:{g,j}}
-  REAL.forEach(a=>{h2h[a]={};REAL.forEach(b=>{if(a!==b)h2h[a][b]={withG:0,withJ:0,vsG:0,vsJ:0};});});
+  // Build combined h2h from historical data + live rows
+  const seasonsToUse=histSel==='all'?null:histSel;
+  const useRows=seasonsToUse?rows.filter(r=>fmtSeason(r.fecha)===seasonsToUse):rows;
 
-  // Process all seasons' pairs data
-  const allPairSeasons=Object.keys(HIST_PAIRS);
-  allPairSeasons.forEach(s=>{
-    (HIST_PAIRS[s]||[]).forEach(pair=>{
-      const pls=pair.name.split(' · ');
-      if(pls.length!==2)return;
-      const [a,b]=pls;
-      // As teammates
-      if(h2h[a]&&h2h[a][b]){h2h[a][b].withG+=pair.g;h2h[a][b].withJ+=pair.j;}
-      if(h2h[b]&&h2h[b][a]){h2h[b][a].withG+=pair.g;h2h[b][a].withJ+=pair.j;}
+  // rivalData[player][rival] = {l, j}
+  const rivalData={};
+  const partnerData={};
+  REAL.forEach(n=>{rivalData[n]={};partnerData[n]={};});
+
+  // Add historical data
+  const histSeasons=histSel==='all'?Object.keys(HIST_H2H):[histSel];
+  histSeasons.forEach(s=>{
+    const sh=HIST_H2H[s]||{};
+    Object.keys(sh).forEach(player=>{
+      if(!rivalData[player])return;
+      Object.keys(sh[player]).forEach(rival=>{
+        if(!rivalData[player][rival])rivalData[player][rival]={l:0,j:0};
+        rivalData[player][rival].l+=sh[player][rival].l;
+        rivalData[player][rival].j+=sh[player][rival].j;
+      });
+    });
+    const sp=HIST_PARTNER[s]||{};
+    Object.keys(sp).forEach(player=>{
+      if(!partnerData[player])return;
+      Object.keys(sp[player]).forEach(partner=>{
+        if(!partnerData[player][partner])partnerData[player][partner]={g:0,j:0};
+        partnerData[player][partner].g+=sp[player][partner].g;
+        partnerData[player][partner].j+=sp[player][partner].j;
+      });
     });
   });
 
-  // Process live rows for h2h
-  const seasonsToUse=histSel==='all'?null:histSel;
-  const useRows=seasonsToUse?rows.filter(r=>fmtSeason(r.fecha)===seasonsToUse):rows;
+  // Add live rows
   useRows.forEach(r=>{
     const p1w=r.ganador==='Pareja 1';
     const winners=p1w?[r.p1a,r.p1b]:[r.p2a,r.p2b];
     const losers=p1w?[r.p2a,r.p2b]:[r.p1a,r.p1b];
-    // As teammates (winners with each other)
-    winners.forEach(a=>{winners.forEach(b=>{if(a!==b&&h2h[a]&&h2h[a][b]){h2h[a][b].withG++;h2h[a][b].withJ++;}});});
-    losers.forEach(a=>{losers.forEach(b=>{if(a!==b&&h2h[a]&&h2h[a][b]){h2h[a][b].withJ++;}});});
-    // As rivals
-    winners.forEach(a=>{losers.forEach(b=>{
-      if(REAL.includes(a)&&REAL.includes(b)){
-        if(h2h[a]&&h2h[a][b]){h2h[a][b].vsG++;h2h[a][b].vsJ++;}
-        if(h2h[b]&&h2h[b][a]){h2h[b][a].vsJ++;}
-      }
-    });});
-    losers.forEach(a=>{winners.forEach(b=>{
-      if(REAL.includes(a)&&REAL.includes(b)){
-        if(h2h[a]&&h2h[a][b]){h2h[a][b].vsJ++;}
-      }
-    });});
-  });
-
-  // Also add hist pairs to live rows context for 2026-27
-  if(histSel==='all'||histSel==='2024-2025'){
-    (HIST_PAIRS['2024-2025']||[]).forEach(pair=>{
-      const pls=pair.name.split(' · ');
-      if(pls.length!==2)return;
-      const [a,b]=pls;
-      // We only have pair G/J not individual vs, so skip rival stats from hist
+    // Rival stats
+    losers.forEach(loser=>{
+      if(!REAL.includes(loser))return;
+      winners.forEach(winner=>{
+        if(!REAL.includes(winner)||winner===loser)return;
+        if(!rivalData[loser][winner])rivalData[loser][winner]={l:0,j:0};
+        rivalData[loser][winner].l++;rivalData[loser][winner].j++;
+        if(!rivalData[winner][loser])rivalData[winner][loser]={l:0,j:0};
+        rivalData[winner][loser].j++;
+      });
     });
-  }
+    // Partner stats
+    [[r.p1a,r.p1b,p1w],[r.p2a,r.p2b,!p1w]].forEach(([a,b,win])=>{
+      if(REAL.includes(a)&&REAL.includes(b)){
+        if(!partnerData[a][b])partnerData[a][b]={g:0,j:0};
+        partnerData[a][b].j++;if(win)partnerData[a][b].g++;
+        if(!partnerData[b][a])partnerData[b][a]={g:0,j:0};
+        partnerData[b][a].j++;if(win)partnerData[b][a].g++;
+      }
+    });
+  });
 
   // Streaks from live rows only
   const playerRows={};
@@ -1359,42 +1390,17 @@ function renderHistExtras(){
   html+='<div style="display:flex;flex-direction:column;gap:6px;">';
   let foundPartner=false;
   REAL.forEach(n=>{
-    const partners=Object.entries(h2h[n]||{}).filter(([v,d])=>d.withJ>=3&&REAL.includes(v)).sort((a,b)=>b[1].withG/b[1].withJ-a[1].withG/a[1].withJ);
+    const partners=Object.entries(partnerData[n]||{}).filter(([v,d])=>d.j>=3&&REAL.includes(v)).sort((a,b)=>b[1].g/b[1].j-a[1].g/a[1].j);
     if(!partners.length)return;
     const [partner,d]=partners[0];
     foundPartner=true;
     html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
       makeAv(n,32)+'<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
-      '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+pctS(d.withG,d.withJ)+' con</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+pctS(d.g,d.j)+' con</div>'+
       makeAv(partner,32)+'<div style="font-size:12px;font-weight:700;color:var(--va);">'+partner+'</div></div>';
   });
   if(!foundPartner)html+='<div style="color:rgba(255,255,255,0.25);padding:12px;text-align:center;font-size:12px;">Necesita al menos 3 partidas con el mismo compañero</div>';
   html+='</div>';
-
-  // Rival más difícil (only from live rows, min 3 games)
-  const rivalData={};
-  REAL.forEach(n=>{rivalData[n]={};});
-  useRows.forEach(r=>{
-    const p1w=r.ganador==='Pareja 1';
-    const winners=p1w?[r.p1a,r.p1b]:[r.p2a,r.p2b];
-    const losers=p1w?[r.p2a,r.p2b]:[r.p1a,r.p1b];
-    losers.forEach(loser=>{
-      if(!REAL.includes(loser))return;
-      winners.forEach(winner=>{
-        if(!REAL.includes(winner))return;
-        if(!rivalData[loser][winner])rivalData[loser][winner]={l:0,j:0};
-        rivalData[loser][winner].l++;rivalData[loser][winner].j++;
-      });
-    });
-    winners.forEach(winner=>{
-      if(!REAL.includes(winner))return;
-      losers.forEach(loser=>{
-        if(!REAL.includes(loser))return;
-        if(!rivalData[winner][loser])rivalData[winner][loser]={l:0,j:0};
-        rivalData[winner][loser].j++;
-      });
-    });
-  });
 
   html+='<div class="sec" style="margin-top:16px;">😤 Rival más difícil</div>';
   html+='<div style="display:flex;flex-direction:column;gap:6px;">';
