@@ -562,7 +562,7 @@ function showWelcome(name){
   <div class="tab-panel" id="tab-reglamento">
     <div style="display:flex;gap:8px;margin-bottom:12px;">
       <button class="htab active" id="rtab-btn-juego" onclick="setReglaTab('juego',this)">Reglas del Juego</button>
-      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Sistema de Puntos</button>
+      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Sistema de Puntos 2026-2027</button>
     </div>
     <div id="rtab-juego">
     <div class="sec">Liga Mus Bruselas 38</div>
@@ -605,12 +605,12 @@ function showWelcome(name){
           </div>
           <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
             <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador B — 100 partidas, 60 victorias</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 victorias en ×1.005 + 10 victorias en ×1.010<br>Suma = 30.0 + 20.1 + 10.1 = <strong style="color:var(--va);">60.2</strong><br>Puntuación = 60.2 ÷ 100 = <strong style="color:var(--va);">0.602</strong> (60.2%)</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 victorias en ×1.010 + 10 victorias en ×1.020<br>Suma = 30.0 + 20.2 + 10.2 = <strong style="color:var(--va);">60.4</strong><br>Puntuación = 60.4 ÷ 100 = <strong style="color:var(--va);">0.604</strong> (60.4%)</div>
           </div>
         </div>
         <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;">
-            🏆 Ambos tienen el <strong style="color:rgba(255,255,255,0.8);">mismo % de victorias (60%)</strong>, pero el Jugador B tiene una puntuación ligeramente superior por haber jugado más. El <strong style="color:var(--va);">ganador de la liga será quien tenga la mayor puntuación acumulada al final de temporada</strong>.
+            🏆 Ambos tienen el <strong style="color:rgba(255,255,255,0.8);">mismo % de victorias (60%)</strong>, pero el Jugador B tiene una puntuación superior por haber jugado más. Cuanto mayor sea la diferencia de partidas, más se nota. El <strong style="color:var(--va);">ganador de la liga será quien tenga la mayor puntuación acumulada al final de temporada</strong>.
           </div>
         </div>
         <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
@@ -620,16 +620,16 @@ function showWelcome(name){
             <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-align:right;">MULTIPLICADOR</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">1º</div><div style="font-size:13px;font-weight:600;text-align:center;">1 – 50</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.000</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">2º</div><div style="font-size:13px;font-weight:600;text-align:center;">51 – 75</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.005</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">3º</div><div style="font-size:13px;font-weight:600;text-align:center;">76 – 100</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.010</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">4º</div><div style="font-size:13px;font-weight:600;text-align:center;">101 – 125</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.015</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">5º</div><div style="font-size:13px;font-weight:600;text-align:center;">126 – 150</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.020</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">6º</div><div style="font-size:13px;font-weight:600;text-align:center;">151 – 175</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.025</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">…</div><div style="font-size:13px;font-weight:600;text-align:center;">+25 partidas</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">+×0.005</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">2º</div><div style="font-size:13px;font-weight:600;text-align:center;">51 – 75</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.010</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">3º</div><div style="font-size:13px;font-weight:600;text-align:center;">76 – 100</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.020</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">4º</div><div style="font-size:13px;font-weight:600;text-align:center;">101 – 125</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.030</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">5º</div><div style="font-size:13px;font-weight:600;text-align:center;">126 – 150</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.040</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">6º</div><div style="font-size:13px;font-weight:600;text-align:center;">151 – 175</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.050</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">…</div><div style="font-size:13px;font-weight:600;text-align:center;">+25 partidas</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">+×0.010</div></div>
         </div>
         <div style="margin-top:12px;padding:10px 12px;background:rgba(58,175,92,0.08);border-radius:8px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">
-            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo:</strong> Si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.005</strong> en vez de ×1.000.<br>
+            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo:</strong> Si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.010</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
             📌 Las temporadas anteriores (2024-25, 2025-26) se siguen midiendo por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>.<br>
             📌 El ganador de la liga 2026-27 es quien tenga la <strong style="color:rgba(255,255,255,0.8);">mayor puntuación acumulada</strong>.
           </div>
@@ -886,7 +886,7 @@ function getMultiplier(matchNum){
   if(matchNum<=50) return 1.000;
   const extra=matchNum-50;
   const tramo=Math.floor((extra-1)/25);
-  return 1.000+(tramo+1)*0.005;
+  return 1.000+(tramo+1)*0.010;
 }
 
 function computeStats(){
@@ -1227,151 +1227,191 @@ function setReglaTab(tab,btn){
 function renderHistExtras(){
   const el=document.getElementById('hist-extras');
   if(!el){setTimeout(renderHistExtras,200);return;}
-  // Get all rows for selected season
-  const isAll=histSel==='all';
-  const histRows=isAll?rows:[...rows].filter(r=>fmtSeason(r.fecha)===histSel);
 
-  // Build per-player stats from live rows
-  const stats={};
-  REAL.forEach(n=>stats[n]={name:n,streak:0,maxStreak:0,lastWin:null,vsLoss:{},vsWith:{},bestSeason:null,worstSeason:null});
+  // Build combined h2h stats from HIST_PAIRS + live rows
+  // For each player pair, we know g/j - derive individual h2h
+  const h2h={}; // h2h[playerA][playerB] = {asTeam:{g,j}, vsRival:{g,j}}
+  REAL.forEach(a=>{h2h[a]={};REAL.forEach(b=>{if(a!==b)h2h[a][b]={withG:0,withJ:0,vsG:0,vsJ:0};});});
 
-  // Streak and h2h from live rows
+  // Process all seasons' pairs data
+  const allPairSeasons=Object.keys(HIST_PAIRS);
+  allPairSeasons.forEach(s=>{
+    (HIST_PAIRS[s]||[]).forEach(pair=>{
+      const pls=pair.name.split(' · ');
+      if(pls.length!==2)return;
+      const [a,b]=pls;
+      // As teammates
+      if(h2h[a]&&h2h[a][b]){h2h[a][b].withG+=pair.g;h2h[a][b].withJ+=pair.j;}
+      if(h2h[b]&&h2h[b][a]){h2h[b][a].withG+=pair.g;h2h[b][a].withJ+=pair.j;}
+    });
+  });
+
+  // Process live rows for h2h
+  const seasonsToUse=histSel==='all'?null:histSel;
+  const useRows=seasonsToUse?rows.filter(r=>fmtSeason(r.fecha)===seasonsToUse):rows;
+  useRows.forEach(r=>{
+    const p1w=r.ganador==='Pareja 1';
+    const winners=p1w?[r.p1a,r.p1b]:[r.p2a,r.p2b];
+    const losers=p1w?[r.p2a,r.p2b]:[r.p1a,r.p1b];
+    // As teammates (winners with each other)
+    winners.forEach(a=>{winners.forEach(b=>{if(a!==b&&h2h[a]&&h2h[a][b]){h2h[a][b].withG++;h2h[a][b].withJ++;}});});
+    losers.forEach(a=>{losers.forEach(b=>{if(a!==b&&h2h[a]&&h2h[a][b]){h2h[a][b].withJ++;}});});
+    // As rivals
+    winners.forEach(a=>{losers.forEach(b=>{
+      if(REAL.includes(a)&&REAL.includes(b)){
+        if(h2h[a]&&h2h[a][b]){h2h[a][b].vsG++;h2h[a][b].vsJ++;}
+        if(h2h[b]&&h2h[b][a]){h2h[b][a].vsJ++;}
+      }
+    });});
+    losers.forEach(a=>{winners.forEach(b=>{
+      if(REAL.includes(a)&&REAL.includes(b)){
+        if(h2h[a]&&h2h[a][b]){h2h[a][b].vsJ++;}
+      }
+    });});
+  });
+
+  // Also add hist pairs to live rows context for 2026-27
+  if(histSel==='all'||histSel==='2024-2025'){
+    (HIST_PAIRS['2024-2025']||[]).forEach(pair=>{
+      const pls=pair.name.split(' · ');
+      if(pls.length!==2)return;
+      const [a,b]=pls;
+      // We only have pair G/J not individual vs, so skip rival stats from hist
+    });
+  }
+
+  // Streaks from live rows only
   const playerRows={};
   REAL.forEach(n=>playerRows[n]=[]);
-  histRows.forEach(r=>{
+  useRows.forEach(r=>{
     const p1w=r.ganador==='Pareja 1';
     [{pl:[r.p1a,r.p1b],win:p1w},{pl:[r.p2a,r.p2b],win:!p1w}].forEach(t=>{
-      t.pl.forEach(p=>{
-        if(!REAL.includes(p))return;
-        playerRows[p].push({win:t.win,with:t.pl.filter(x=>x!==p&&REAL.includes(x))[0],vs:(t.win?[r.p2a,r.p2b]:[r.p1a,r.p1b]).filter(x=>REAL.includes(x))});
-      });
+      t.pl.forEach(p=>{if(REAL.includes(p))playerRows[p].push(t.win);});
     });
   });
+  const streaks={};
+  REAL.forEach(n=>{let cur=0,max=0;playerRows[n].forEach(w=>{if(w){cur++;max=Math.max(max,cur);}else cur=0;});streaks[n]=max;});
 
-  // Calculate streaks and h2h
-  REAL.forEach(n=>{
-    let cur=0,max=0;
-    playerRows[n].forEach(m=>{
-      if(m.win){cur++;max=Math.max(max,cur);}else cur=0;
-      // Rival stats
-      m.vs.forEach(v=>{
-        if(!stats[n].vsLoss[v])stats[n].vsLoss[v]={l:0,g:0,j:0};
-        stats[n].vsLoss[v].j++;
-        if(!m.win)stats[n].vsLoss[v].l++;
-        if(m.win)stats[n].vsLoss[v].g++;
-      });
-      // Partner stats
-      if(m.with){
-        if(!stats[n].vsWith[m.with])stats[n].vsWith[m.with]={g:0,j:0};
-        stats[n].vsWith[m.with].j++;
-        if(m.win)stats[n].vsWith[m.with].g++;
-      }
-    });
-    stats[n].maxStreak=max;
-  });
+  const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
+  const makeAv=(name,size)=>'<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+(PHOTOS[name]?'<img src="'+PHOTOS[name]+'" style="'+imgS+'">':name[0])+'</div>';
 
-  // Best/worst season per player (from HIST + live)
-  const allSeasons=['2024-2025','2025-2026','2026-2027'];
-  REAL.forEach(n=>{
-    let best=null,worst=null;
-    allSeasons.forEach(s=>{
-      let g=0,j=0;
-      if(s==='2026-2027'){const ls=liveStats[n]||{g:0,j:0};g=ls.g;j=ls.j;}
-      else{const sp=(HIST[s]||[]).find(x=>x.name===n);if(sp){g=sp.g;j=sp.j;}}
-      if(j<10)return;
-      const p=j?g/j:0;
-      if(!best||p>best.p)best={s,g,j,p};
-      if(!worst||p<worst.p)worst={s,g,j,p};
-    });
-    stats[n].bestSeason=best;
-    stats[n].worstSeason=worst;
-  });
-
-  // Render
   let html='';
 
   // Racha máxima
-  if(histRows.length){
-    const streaks=REAL.map(n=>({name:n,streak:stats[n].maxStreak})).filter(x=>x.streak>0).sort((a,b)=>b.streak-a.streak);
-    if(streaks.length){
-      html+='<div class="sec" style="margin-top:16px;">🔥 Racha Máxima de Victorias</div>';
-      html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:4px;">';
-      streaks.forEach((s,i)=>{
-        const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
-        const av=PHOTOS[s.name]?'<img src="'+PHOTOS[s.name]+'" style="'+imgS+'">':s.name[0];
-        html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;text-align:center;">'+
-          '<div style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.1);margin:0 auto 6px;">'+av+'</div>'+
-          '<div style="font-size:12px;font-weight:700;margin-bottom:4px;">'+s.name+'</div>'+
-          '<div style="font-family:Oswald,sans-serif;font-size:22px;font-weight:700;color:#ff9800;">'+s.streak+'</div>'+
-          '<div style="font-size:9px;color:rgba(255,255,255,0.3);">victorias seguidas</div>'+
+  const topStreaks=REAL.map(n=>({name:n,streak:streaks[n]})).filter(x=>x.streak>0).sort((a,b)=>b.streak-a.streak);
+  if(topStreaks.length){
+    html+='<div class="sec" style="margin-top:16px;">🔥 Racha Máxima de Victorias</div>';
+    html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;">';
+    topStreaks.forEach((s,i)=>{
+      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;text-align:center;">'+
+        makeAv(s.name,40)+'<div style="font-size:12px;font-weight:700;margin:6px 0 4px;">'+s.name+'</div>'+
+        '<div style="font-family:Oswald,sans-serif;font-size:22px;font-weight:700;color:#ff9800;">'+s.streak+'</div>'+
+        '<div style="font-size:9px;color:rgba(255,255,255,0.3);">seguidas</div></div>';
+    });
+    html+='</div>';
+  }
+
+  // Mejor temporada (all time only)
+  if(histSel==='all'){
+    const bestWorst=[];
+    REAL.forEach(n=>{
+      let best=null,worst=null;
+      [['2024-2025'],['{2025-2026}'],[' 2026-2027']].forEach(([s])=>{
+        let g=0,j=0;
+        const ss=s.trim();
+        if(ss==='2026-2027'){const ls=liveStats[n]||{g:0,j:0};g=ls.g;j=ls.j;}
+        else{const sp=(HIST[ss]||[]).find(x=>x.name===n);if(sp){g=sp.g;j=sp.j;}}
+        if(j<5)return;
+        const p=g/j;
+        if(!best||p>best.p)best={s:ss,g,j,p};
+        if(!worst||p<worst.p)worst={s:ss,g,j,p};
+      });
+      if(best)bestWorst.push({name:n,best,worst});
+    });
+    if(bestWorst.length){
+      html+='<div class="sec" style="margin-top:16px;">📈 Mejor y Peor Temporada</div>';
+      html+='<div style="display:flex;flex-direction:column;gap:6px;">';
+      bestWorst.sort((a,b)=>b.best.p-a.best.p).forEach(x=>{
+        const bestLbl=x.best.s==='2026-2027'?'2026-27':x.best.s==='2025-2026'?'2025-26':'2024-25';
+        const worstLbl=x.worst?(x.worst.s==='2026-2027'?'2026-27':x.worst.s==='2025-2026'?'2025-26':'2024-25'):'';
+        html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;">'+
+          makeAv(x.name,36)+
+          '<div style="font-size:13px;font-weight:700;flex:1;">'+x.name+'</div>'+
+          '<div style="display:flex;flex-direction:column;gap:3px;text-align:right;">'+
+            '<div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">'+
+              '<span style="font-size:10px;color:rgba(255,255,255,0.35);">'+bestLbl+'</span>'+
+              '<span style="font-family:Oswald,sans-serif;font-size:15px;font-weight:700;color:var(--va);">↑ '+pctS(x.best.g,x.best.j)+'</span>'+
+            '</div>'+
+            (x.worst&&x.worst.s!==x.best.s?
+              '<div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">'+
+                '<span style="font-size:10px;color:rgba(255,255,255,0.35);">'+worstLbl+'</span>'+
+                '<span style="font-family:Oswald,sans-serif;font-size:15px;font-weight:700;color:#e57373;">↓ '+pctS(x.worst.g,x.worst.j)+'</span>'+
+              '</div>':'')+
+          '</div>'+
           '</div>';
       });
       html+='</div>';
     }
   }
 
-  // Mejor y peor temporada (only in all-time view)
-  if(isAll){
-    html+='<div class="sec" style="margin-top:16px;">📈 Mejor y Peor Temporada</div>';
-    html+='<div style="display:flex;flex-direction:column;gap:6px;">';
-    REAL.forEach(n=>{
-      const b=stats[n].bestSeason,w=stats[n].worstSeason;
-      if(!b)return;
-      const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
-      const av=PHOTOS[n]?'<img src="'+PHOTOS[n]+'" style="'+imgS+'">':n[0];
-      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;">'+
-        '<div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av+'</div>'+
-        '<div style="font-size:13px;font-weight:700;flex:1;">'+n+'</div>'+
-        '<div style="text-align:right;font-size:11px;"><span style="color:var(--va);">↑ '+b.s.replace('-20','-')+' ('+pctS(b.g,b.j)+')</span><br>'+(w&&w.s!==b.s?'<span style="color:#e57373;">↓ '+w.s.replace('-20','-')+' ('+pctS(w.g,w.j)+')</span>':'')+'</div>'+
-        '</div>';
-    });
-    html+='</div>';
-  }
+  // Mejor compañero (from HIST_PAIRS + live, min 3 games)
+  html+='<div class="sec" style="margin-top:16px;">🤝 Mejor Compañero</div>';
+  html+='<div style="display:flex;flex-direction:column;gap:6px;">';
+  let foundPartner=false;
+  REAL.forEach(n=>{
+    const partners=Object.entries(h2h[n]||{}).filter(([v,d])=>d.withJ>=3&&REAL.includes(v)).sort((a,b)=>b[1].withG/b[1].withJ-a[1].withG/a[1].withJ);
+    if(!partners.length)return;
+    const [partner,d]=partners[0];
+    foundPartner=true;
+    html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
+      makeAv(n,32)+'<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+pctS(d.withG,d.withJ)+' con</div>'+
+      makeAv(partner,32)+'<div style="font-size:12px;font-weight:700;color:var(--va);">'+partner+'</div></div>';
+  });
+  if(!foundPartner)html+='<div style="color:rgba(255,255,255,0.25);padding:12px;text-align:center;font-size:12px;">Necesita al menos 3 partidas con el mismo compañero</div>';
+  html+='</div>';
 
-  // Rival más difícil
-  if(histRows.length){
-    html+='<div class="sec" style="margin-top:16px;">😤 Rival más difícil</div>';
-    html+='<div style="display:flex;flex-direction:column;gap:6px;">';
-    REAL.forEach(n=>{
-      const rivals=Object.entries(stats[n].vsLoss).filter(([v,d])=>d.j>=3).sort((a,b)=>b[1].l/b[1].j-a[1].l/a[1].j);
-      if(!rivals.length)return;
-      const [rival,d]=rivals[0];
-      const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
-      const av1=PHOTOS[n]?'<img src="'+PHOTOS[n]+'" style="'+imgS+'">':n[0];
-      const av2=PHOTOS[rival]?'<img src="'+PHOTOS[rival]+'" style="'+imgS+'">':rival[0];
-      const lossRate=Math.round(d.l/d.j*100);
-      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
-        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av1+'</div>'+
-        '<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
-        '<div style="font-size:11px;color:rgba(255,255,255,0.4);">pierde '+lossRate+'% vs</div>'+
-        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av2+'</div>'+
-        '<div style="font-size:12px;font-weight:700;color:#e57373;">'+rival+'</div>'+
-        '</div>';
+  // Rival más difícil (only from live rows, min 3 games)
+  const rivalData={};
+  REAL.forEach(n=>{rivalData[n]={};});
+  useRows.forEach(r=>{
+    const p1w=r.ganador==='Pareja 1';
+    const winners=p1w?[r.p1a,r.p1b]:[r.p2a,r.p2b];
+    const losers=p1w?[r.p2a,r.p2b]:[r.p1a,r.p1b];
+    losers.forEach(loser=>{
+      if(!REAL.includes(loser))return;
+      winners.forEach(winner=>{
+        if(!REAL.includes(winner))return;
+        if(!rivalData[loser][winner])rivalData[loser][winner]={l:0,j:0};
+        rivalData[loser][winner].l++;rivalData[loser][winner].j++;
+      });
     });
-    html+='</div>';
-  }
+    winners.forEach(winner=>{
+      if(!REAL.includes(winner))return;
+      losers.forEach(loser=>{
+        if(!REAL.includes(loser))return;
+        if(!rivalData[winner][loser])rivalData[winner][loser]={l:0,j:0};
+        rivalData[winner][loser].j++;
+      });
+    });
+  });
 
-  // Compañero favorito
-  if(histRows.length){
-    html+='<div class="sec" style="margin-top:16px;">🤝 Mejor compañero</div>';
-    html+='<div style="display:flex;flex-direction:column;gap:6px;">';
-    REAL.forEach(n=>{
-      const partners=Object.entries(stats[n].vsWith).filter(([v,d])=>d.j>=3).sort((a,b)=>b[1].g/b[1].j-a[1].g/a[1].j);
-      if(!partners.length)return;
-      const [partner,d]=partners[0];
-      const imgS='width:100%;height:100%;object-fit:cover;object-position:center top;';
-      const av1=PHOTOS[n]?'<img src="'+PHOTOS[n]+'" style="'+imgS+'">':n[0];
-      const av2=PHOTOS[partner]?'<img src="'+PHOTOS[partner]+'" style="'+imgS+'">':partner[0];
-      html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
-        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av1+'</div>'+
-        '<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
-        '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+pctS(d.g,d.j)+' con</div>'+
-        '<div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">'+av2+'</div>'+
-        '<div style="font-size:12px;font-weight:700;color:var(--va);">'+partner+'</div>'+
-        '</div>';
-    });
-    html+='</div>';
-  }
+  html+='<div class="sec" style="margin-top:16px;">😤 Rival más difícil</div>';
+  html+='<div style="display:flex;flex-direction:column;gap:6px;">';
+  let foundRival=false;
+  REAL.forEach(n=>{
+    const rivals=Object.entries(rivalData[n]||{}).filter(([v,d])=>d.j>=3).sort((a,b)=>b[1].l/b[1].j-a[1].l/a[1].j);
+    if(!rivals.length)return;
+    const [rival,d]=rivals[0];
+    foundRival=true;
+    const lossRate=Math.round(d.l/d.j*100);
+    html+='<div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">'+
+      makeAv(n,32)+'<div style="font-size:12px;font-weight:700;flex:1;">'+n+'</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,0.4);">pierde '+lossRate+'% vs</div>'+
+      makeAv(rival,32)+'<div style="font-size:12px;font-weight:700;color:#e57373;">'+rival+'</div></div>';
+  });
+  if(!foundRival)html+='<div style="color:rgba(255,255,255,0.25);padding:12px;text-align:center;font-size:12px;">Se necesitan al menos 3 enfrentamientos directos</div>';
+  html+='</div>';
 
   el.innerHTML=html;
 }
@@ -1381,7 +1421,7 @@ function renderHistorico(){
   const pl=getHistPlayers(histSel);const hp=document.getElementById('hist-podium');
   if(!pl.length){hp.innerHTML='<div class="pod-empty"><div class="pod-empty-row"><div class="pod-empty-av">🥈</div><div class="pod-empty-av big">🥇</div><div class="pod-empty-av">🥉</div></div></div>';}
   else{const top3=pl.slice(0,3);const ord=top3.length>=3?[top3[1],top3[0],top3[2]]:top3.length===2?[top3[1],top3[0]]:[top3[0]];hp.innerHTML='<div class="podium">'+ord.map((p,i)=>{const isC=(top3.length>=2&&i===1)||(top3.length===1&&i===0);return '<div class="pod-item"><div class="pod-avatar">'+avHTML(p.name)+'</div><div class="pod-name">'+(isC?'👑 ':'')+p.name+'</div><div class="pod-pct">'+pctS(p.g,p.j)+'</div><div class="pod-block"></div></div>';}).join('')+'</div>';}
-  renderClassTable(pl,'ctable-hist',false,false);
+  renderClassTable(pl,'ctable-hist',false,false,histSel==='2026-2027');
   setTimeout(renderHistExtras,50);
 }
 
