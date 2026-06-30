@@ -1562,8 +1562,14 @@ function openForm(){
   document.getElementById('formModal').classList.add('open');
 }
 function renderPtsSel(){[1,2].forEach(n=>{document.getElementById('pts'+n+'-sel').innerHTML=[0,1,2,3].map(v=>'<button class="pts-num '+(selPts['p'+n]===v?'sel':'')+'" onclick="setPts('+n+','+v+')">'+v+'</button>').join('');});}
-function setPts(n,v){selPts['p'+n]=v;document.getElementById('pts'+n+'-in').value=v;renderPtsSel();}
-function syncPts(n){const v=parseInt(document.getElementById('pts'+n+'-in').value);selPts['p'+n]=isNaN(v)?null:v;renderPtsSel();}
+function setPts(n,v){selPts['p'+n]=v;document.getElementById('pts'+n+'-in').value=v;renderPtsSel();autoSelectWinner();}
+function syncPts(n){const v=parseInt(document.getElementById('pts'+n+'-in').value);selPts['p'+n]=isNaN(v)?null:v;renderPtsSel();autoSelectWinner();}
+function autoSelectWinner(){
+  if(selPts.p1===null||selPts.p2===null)return;
+  if(selPts.p1===selPts.p2)return; // tie, don't auto-select
+  const winner=selPts.p1>selPts.p2?1:2;
+  selW(winner);
+}
 function renderFG(){
   ['p1a','p1b','p2a','p2b'].forEach(slot=>{
     const el=document.getElementById(slot+'-g');
