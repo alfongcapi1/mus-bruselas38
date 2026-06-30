@@ -995,8 +995,11 @@ function fmtSeason(fecha){
   const clean=s.includes('-')&&s.length===10?s:s;
   const y=parseInt(clean.split('-')[0]||clean.split('/')[2]||0);
   const m=parseInt(clean.split('-')[1]||clean.split('/')[1]||0);
+  const d=parseInt(clean.split('-')[2]||clean.split('/')[0]||0);
   if(!y)return '';
-  const sy=m>=9?y:y-1;
+  // Temporada nueva arranca el 3 de julio de cada año
+  const afterCutoff=(m>7)||(m===7&&d>=3);
+  const sy=afterCutoff?y:y-1;
   return sy+'-'+(sy+1);
 }
 function fmtDate(fecha){
