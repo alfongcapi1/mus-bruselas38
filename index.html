@@ -998,8 +998,8 @@ function fmtSeason(fecha){
   const m=parseInt(clean.split('-')[1]||clean.split('/')[1]||0);
   const d=parseInt(clean.split('-')[2]||clean.split('/')[0]||0);
   if(!y)return '';
-  // Temporada nueva arranca el 3 de julio de cada año
-  const afterCutoff=(m>7)||(m===7&&d>=3);
+  // Temporada nueva arranca el 27 de junio de cada año
+  const afterCutoff=(m>6)||(m===6&&d>=27);
   const sy=afterCutoff?y:y-1;
   return sy+'-'+(sy+1);
 }
