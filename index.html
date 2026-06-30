@@ -544,10 +544,10 @@ function showWelcome(name){
 
   <div class="tab-panel" id="tab-historico">
     <div class="htabs">
-      <button class="htab star active" onclick="setHist('all',this)">⭐ All Time</button>
+      <button class="htab star" onclick="setHist('all',this)">⭐ All Time</button>
       <button class="htab" onclick="setHist('2024-2025',this)">2024-25</button>
       <button class="htab" onclick="setHist('2025-2026',this)">2025-26</button>
-      <button class="htab" onclick="setHist('2026-2027',this)"><span class="live-dot" style="display:inline-block;width:5px;height:5px;vertical-align:middle;margin-right:3px;"></span>2026-27</button>
+      <button class="htab active" onclick="setHist('2026-2027',this)"><span class="live-dot" style="display:inline-block;width:5px;height:5px;vertical-align:middle;margin-right:3px;"></span>2026-27</button>
     </div>
     <div id="hist-podium"></div>
     <div class="sec">Clasificación Individual</div>
@@ -783,7 +783,7 @@ const CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vQZKvHHVjtp0Qsn0P1n1J
 const SCRIPT='https://script.google.com/macros/s/AKfycbypE4XOY1VkXE2wjf4NYx2Uksw3pgAWZADsjv3tPZxSkTfB_e12JT8cCurvJ29kN24/exec';
 
 let rows=[],liveStats={},livePairs={};
-let histSel='all';
+let histSel='2026-2027';
 let fSel={p1a:null,p1b:null,p2a:null,p2b:null};
 let selWinner=0,selPts={p1:null,p2:null};
 let compSel=[];
@@ -910,7 +910,8 @@ function computeStats(){
   const scoreSum={};
   REAL.forEach(p=>{liveStats[p]={g:0,j:0,score:0};matchCount[p]=0;scoreSum[p]=0;});
 
-  rows.forEach(row=>{
+  // Solo partidas que caen realmente en la temporada 2026-2027 (según fecha)
+  rows.filter(row=>fmtSeason(row.fecha)==='2026-2027').forEach(row=>{
     const p1w=row.ganador==='Pareja 1';
     [{pl:[row.p1a,row.p1b],win:p1w},{pl:[row.p2a,row.p2b],win:!p1w}].forEach(t=>{
       // Pairs stats (no multiplier for pairs)
@@ -1258,9 +1259,15 @@ function renderHistExtras(){
   const el=document.getElementById('hist-extras');
   if(!el){setTimeout(renderHistExtras,200);return;}
 
+  // Temporadas bloqueadas: sin datos hasta que se suba el Excel correspondiente.
+  // Quitar '2025-2026' de aquí en cuanto Alfonso mande el Excel de esa temporada.
+  const SEASON_LOCK={'2025-2026':true};
+
   // Build combined h2h from historical data + live rows
   const seasonsToUse=histSel==='all'?null:histSel;
-  const useRows=seasonsToUse?rows.filter(r=>fmtSeason(r.fecha)===seasonsToUse):rows;
+  const useRows=seasonsToUse
+    ?(SEASON_LOCK[seasonsToUse]?[]:rows.filter(r=>fmtSeason(r.fecha)===seasonsToUse))
+    :rows.filter(r=>!SEASON_LOCK[fmtSeason(r.fecha)]);
 
   // rivalData[player][rival] = {l, j}
   const rivalData={};
@@ -1353,7 +1360,7 @@ function renderHistExtras(){
     const bestWorst=[];
     REAL.forEach(n=>{
       let best=null,worst=null;
-      [['2024-2025'],['{2025-2026}'],[' 2026-2027']].forEach(([s])=>{
+      [['2024-2025'],['2025-2026'],['2026-2027']].forEach(([s])=>{
         let g=0,j=0;
         const ss=s.trim();
         if(ss==='2026-2027'){const ls=liveStats[n]||{g:0,j:0};g=ls.g;j=ls.j;}
