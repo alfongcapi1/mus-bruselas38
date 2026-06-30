@@ -1566,7 +1566,13 @@ function setPts(n,v){selPts['p'+n]=v;document.getElementById('pts'+n+'-in').valu
 function syncPts(n){const v=parseInt(document.getElementById('pts'+n+'-in').value);selPts['p'+n]=isNaN(v)?null:v;renderPtsSel();autoSelectWinner();}
 function autoSelectWinner(){
   if(selPts.p1===null||selPts.p2===null)return;
-  if(selPts.p1===selPts.p2)return; // tie, don't auto-select
+  if(selPts.p1===selPts.p2){
+    // Tie - deselect winner to avoid confirming wrong result
+    selWinner=0;
+    document.getElementById('wb1').classList.remove('sel');
+    document.getElementById('wb2').classList.remove('sel');
+    return;
+  }
   const winner=selPts.p1>selPts.p2?1:2;
   selW(winner);
 }
