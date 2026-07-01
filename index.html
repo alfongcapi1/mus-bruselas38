@@ -611,14 +611,24 @@ function showWelcome(name){
           <div style="font-family:Oswald,sans-serif;font-size:14px;color:var(--va);margin-bottom:4px;line-height:1.6;">Puntuación = Σ(multiplicador de tramo × peso del formato, por cada victoria) ÷ Σ(peso del formato, de cada partida jugada)</div>
           <div style="font-size:11px;color:rgba(255,255,255,0.4);">El peso del formato afecta tanto a las victorias que sumas como a las "partidas equivalentes" sobre las que se calcula el promedio. El número de Ganadas/Jugadas que ves en la clasificación sigue siendo el real (sin redondear); solo la puntuación usa el peso.</div>
         </div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo con formatos mezclados</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo paso a paso</div>
         <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:14px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Fon — 60 partidas jugadas (40 al mejor de 5, 20 al mejor de 3), gana 36</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">
-            Partidas equivalentes = 40×1.0 + 20×0.8 = <strong style="color:var(--va);">56</strong> (en vez de 60)<br>
-            Si todas sus victorias están en el tramo ×1.000, suma de victorias ≈ 36 × peso medio ≈ <strong style="color:var(--va);">33.6</strong><br>
-            Puntuación ≈ 33.6 ÷ 56 = <strong style="color:var(--va);">0.600</strong><br>
-            En clasificación se muestra "36/60" (datos reales), pero la puntuación con la que compite para ganar la liga se calcula sobre esas 56 partidas equivalentes.
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:10px;">👤 Fon lleva 60 partidas: 40 al mejor de 5 (gana 30) y 20 al mejor de 3 (gana 10). Todas sus victorias están en el 1er tramo (×1.000, primeras 50 partidas equivalentes).</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">
+            <strong style="color:rgba(255,255,255,0.85);">Paso 1 — Puntuación de sus partidas al mejor de 5:</strong><br>
+            30 victorias × ×1.000 (tramo) × 1.0 (peso formato) = <strong style="color:var(--va);">30.0 pts</strong>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">
+            <strong style="color:rgba(255,255,255,0.85);">Paso 2 — Puntuación de sus partidas al mejor de 3:</strong><br>
+            10 victorias × ×1.000 (tramo) × 0.8 (peso formato) = <strong style="color:#e8a33d;">8.0 pts</strong>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">
+            <strong style="color:rgba(255,255,255,0.85);">Paso 3 — Partidas equivalentes jugadas:</strong><br>
+            40×1.0 + 20×0.8 = <strong style="color:rgba(255,255,255,0.85);">56</strong> (en vez de 60 reales)
+          </div>
+          <div style="background:rgba(58,175,92,0.08);border-radius:6px;padding:10px;border-left:3px solid var(--va);">
+            <strong style="color:rgba(255,255,255,0.85);">Resultado:</strong> 30.0 + 8.0 = 38.0 pts ÷ 56 partidas equivalentes = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:15px;">0.679</strong><br>
+            <span style="font-size:10px;color:rgba(255,255,255,0.4);">En la clasificación se sigue viendo "40/60" (los datos reales), pero la puntuación 0.679 es la que decide su puesto.</span>
           </div>
         </div>
         <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplos comparativos</div>
@@ -906,6 +916,7 @@ function parseFromScript(data){
       ganador:String(vals[5]||'').trim(),
       pts1:parseInt(vals[6])||0,
       pts2:parseInt(vals[7])||0,
+      registradaPor:String(vals[8]||'').trim(),
       formato
     });
   });
@@ -922,7 +933,7 @@ function parseSheet(csv){
     if(c.length<6)continue;
     let formato='5';
     if(fIdx>=0&&(c[fIdx]||'').indexOf('3')!==-1)formato='3';
-    rows.push({fecha:c[0]||'',p1a:(c[1]||'').trim(),p1b:(c[2]||'').trim(),p2a:(c[3]||'').trim(),p2b:(c[4]||'').trim(),ganador:(c[5]||'').trim(),pts1:parseInt(c[6])||0,pts2:parseInt(c[7])||0,formato});
+    rows.push({fecha:c[0]||'',p1a:(c[1]||'').trim(),p1b:(c[2]||'').trim(),p2a:(c[3]||'').trim(),p2b:(c[4]||'').trim(),ganador:(c[5]||'').trim(),pts1:parseInt(c[6])||0,pts2:parseInt(c[7])||0,registradaPor:(c[8]||'').trim(),formato});
   }
   computeStats();
 }
@@ -959,14 +970,20 @@ function computeStats(){
       t.pl.forEach(p=>{
         if(!p||p==='Castigo')return;
         if(!liveStats[p])liveStats[p]={g:0,j:0,score:0};
-        const mw=row.formato==='3'?0.8:1.0; // peso: mejor de 5 = 1.0, mejor de 3 = 0.8
+        const fk=row.formato==='3'?'3':'5';
+        const mw=fk==='3'?0.8:1.0; // peso: mejor de 5 = 1.0, mejor de 3 = 0.8
         matchCount[p]=(matchCount[p]||0)+mw;
         liveStats[p].j++;
         liveStats[p].jEq=(liveStats[p].jEq||0)+mw;
+        if(!liveStats[p].fmtBreak)liveStats[p].fmtBreak={'5':{j:0,g:0,scoreSum:0},'3':{j:0,g:0,scoreSum:0}};
+        liveStats[p].fmtBreak[fk].j++;
         if(t.win){
           liveStats[p].g++;
           const mult=getMultiplier(matchCount[p]);
-          liveStats[p].scoreSum=(liveStats[p].scoreSum||0)+mult*mw;
+          const add=mult*mw;
+          liveStats[p].scoreSum=(liveStats[p].scoreSum||0)+add;
+          liveStats[p].fmtBreak[fk].g++;
+          liveStats[p].fmtBreak[fk].scoreSum+=add;
           // Track wins per tramo
           const tramo=matchCount[p]<=50?0:Math.floor((matchCount[p]-51)/25)+1;
           if(!liveStats[p].tramoWins)liveStats[p].tramoWins={};
@@ -1119,7 +1136,7 @@ function renderCompResult(){
 function renderClassTable(pl,id,arrow,showAll,showBadge){
   const el=document.getElementById(id);const list=showAll?pl:pl.filter(p=>p.j>0);if(!list.length){el.innerHTML='';return;}
   const withG=list.filter(p=>p.j>0);const maxG=Math.max(...withG.map(p=>p.g),1);
-  el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">%</div></div>'+
+  el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">'+(showBadge?'PTS':'%')+'</div></div>'+
   list.map(function(p){const rank=withG.indexOf(p);
     const nextMult=showBadge&&liveStats[p.name]&&liveStats[p.name].j>0?getMultiplier(liveStats[p.name].j+1).toFixed(3):'';
     const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:1px 4px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:4px;">×'+nextMult+'</span>':'';
@@ -1128,14 +1145,18 @@ function renderClassTable(pl,id,arrow,showAll,showBadge){
       if(!showBadge||!ls||!ls.tramoWins)return '';
       const tramoNames=['×1.000','×1.010','×1.020','×1.030','×1.040','×1.050','×1.060'];
       const parts=Object.entries(ls.tramoWins).map(([t,d])=>d.g+'vic '+tramoNames[t]).join(' + ');
-      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+ls.j+'J</div>';
+      const fb=ls.fmtBreak||{};
+      const f5=fb['5']||{j:0,g:0,scoreSum:0},f3=fb['3']||{j:0,g:0,scoreSum:0};
+      const fmtLine=(f5.j||f3.j)?'<div style="font-size:9px;color:rgba(255,255,255,0.28);margin-top:1px;">Mejor de 5: '+f5.j+'j ('+f5.scoreSum.toFixed(2)+' pts) &nbsp;+&nbsp; Mejor de 3: '+f3.j+'j ('+f3.scoreSum.toFixed(2)+' pts)</div>':'';
+      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+(ls.jEq||ls.j).toFixed(2)+'J·eq</div>'+fmtLine;
     })();
     const formula=tramoBreak
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
     '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
     '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
+    (arrow?formula:'')+
     '</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>'+
-    '<div class="cpct '+(p.j>0?'has':'')+'">'+( showBadge&&ls&&ls.j>0?((ls.score||0)*100).toFixed(1)+'%':pctS(p.g,p.j))+'</div>'+
+    '<div class="cpct '+(p.j>0?'has':'')+'">'+( showBadge&&ls&&ls.j>0?(ls.score||0).toFixed(3):pctS(p.g,p.j))+'</div>'+
     (arrow?'<div class="carr">›</div>':'')+
     '</div>';}).join('');
 }
@@ -1507,6 +1528,24 @@ function openPlayer(name){
     }).join('');
     const total=(ls2627.scoreSum||0).toFixed(2);
     const scoreVal=((ls2627.score||0)*100).toFixed(1);
+    const fb=ls2627.fmtBreak||{};
+    const f5=fb['5']||{j:0,g:0,scoreSum:0},f3=fb['3']||{j:0,g:0,scoreSum:0};
+    const fmtBlock=(f5.j||f3.j)?(
+      '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px;">Desglose por formato</div>'+
+      '<div style="display:flex;gap:8px;">'+
+        '<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.06);">'+
+          '<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);">Mejor de 5 <span style="color:var(--va);font-size:9px;">×1.0</span></div>'+
+          '<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;">'+f5.g+' de '+f5.j+' jugadas</div>'+
+          '<div style="font-family:Oswald,sans-serif;font-size:16px;font-weight:700;color:var(--va);margin-top:4px;">'+f5.scoreSum.toFixed(2)+' pts</div>'+
+        '</div>'+
+        '<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.06);">'+
+          '<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);">Mejor de 3 <span style="color:#e8a33d;font-size:9px;">×0.8</span></div>'+
+          '<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;">'+f3.g+' de '+f3.j+' jugadas</div>'+
+          '<div style="font-family:Oswald,sans-serif;font-size:16px;font-weight:700;color:#e8a33d;margin-top:4px;">'+f3.scoreSum.toFixed(2)+' pts</div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="text-align:center;font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;">'+f5.scoreSum.toFixed(2)+' + '+f3.scoreSum.toFixed(2)+' = <strong style="color:rgba(255,255,255,0.8);">'+total+' pts</strong> en total</div>'
+    ):'';
     scoreEl.innerHTML=
       '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Puntuación 2026-2027</div>'+
       '<div style="background:rgba(0,0,0,0.2);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">'+
@@ -1518,10 +1557,11 @@ function openPlayer(name){
         '</div>'+
         rows2+
         '<div style="display:grid;grid-template-columns:1fr auto;gap:4px;padding:8px 10px;background:rgba(58,175,92,0.08);border-top:1px solid rgba(58,175,92,0.2);">'+
-          '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+ls2627.j+' partidas</div>'+
-          '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+scoreVal+'%</div>'+
+          '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+(ls2627.jEq||ls2627.j).toFixed(2)+' partidas equiv.</div>'+
+          '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+(ls2627.score||0).toFixed(3)+'</div>'+
         '</div>'+
-      '</div>';
+      '</div>'+
+      fmtBlock;
     scoreEl.style.display='block';
   } else if(scoreEl){
     scoreEl.style.display='none';
