@@ -574,7 +574,7 @@ function showWelcome(name){
       <div class="regl-rule"><span class="regl-num">2</span><div>Para contabilizar, la partida debe ser jugada por al menos 3 jugadores de la liga.</div></div>
       <div class="regl-rule"><span class="regl-num">3</span><div>Para poder puntuar en la liga, deberás disputar un mínimo de 50 partidas.</div></div>
       <div class="regl-rule"><span class="regl-num">4</span><div>Si un jugador acumula más de 3 semanas sin participar en una partida, se le restarán 3 partidas ganadas de su historial.</div></div>
-      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga un mayor promedio de victorias.</div></div>
+      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga una mayor puntuación (ver Sistema de Puntos 2026-2027).</div></div>
       <div class="regl-rule"><span class="regl-num">6</span><div>En caso de empate, ganará aquel jugador que haya jugado más partidas.</div></div>
     </div>
     <div class="sec">Estado de Jugadores</div>
@@ -585,66 +585,30 @@ function showWelcome(name){
     <div id="rtab-puntos" style="display:none;">
       <div class="sec">Sistema de Puntos 2026-2027</div>
       <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
-        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:14px;">
-          En 2026-2027 se usa un <strong style="color:var(--va);">promedio ponderado progresivo</strong>. El sistema premia a quien más juega: cuantas más partidas llevas, más valen tus victorias. Así, dos jugadores con el mismo porcentaje de victorias no empatan — gana quien más ha participado.
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.6;margin-bottom:12px;">
+          El ganador de la liga es quien tenga la <strong style="color:var(--va);">mayor puntuación</strong> (no el mayor % de victorias). Dos cosas hacen que una victoria valga más o menos:
         </p>
-        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;margin-bottom:14px;border-left:3px solid #e8a33d;">
-          <div style="font-size:11px;color:#e8a33d;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">🎯 Peso según formato de partida</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:10px;">
-            No todas las partidas valen igual. Las de <strong style="color:rgba(255,255,255,0.9);">mejor de 5</strong> son las oficiales — más largas y completas. Las de <strong style="color:rgba(255,255,255,0.9);">mejor de 3</strong> son más rápidas y menos exigentes, así que cuentan un poco menos para no inflar la puntuación de quien juega muchas partidas cortas.
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+          <div style="display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;">
+            <span style="font-size:16px;">📈</span><div style="font-size:12px;color:rgba(255,255,255,0.65);"><strong style="color:rgba(255,255,255,0.9);">Tramo:</strong> cuantas más partidas llevas jugadas, más vale cada victoria nueva (tabla abajo).</div>
           </div>
-          <div style="display:flex;gap:8px;">
-            <div style="flex:1;background:rgba(58,175,92,0.1);border:1px solid rgba(58,175,92,0.25);border-radius:8px;padding:10px;text-align:center;">
-              <div style="font-family:Oswald,sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,0.9);">Mejor de 5</div>
-              <div style="font-family:Oswald,sans-serif;font-size:22px;font-weight:700;color:var(--va);margin:4px 0;">×1.0</div>
-              <div style="font-size:10px;color:rgba(255,255,255,0.5);">Oficial</div>
-            </div>
-            <div style="flex:1;background:rgba(232,163,61,0.1);border:1px solid rgba(232,163,61,0.25);border-radius:8px;padding:10px;text-align:center;">
-              <div style="font-family:Oswald,sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,0.9);">Mejor de 3</div>
-              <div style="font-family:Oswald,sans-serif;font-size:22px;font-weight:700;color:#e8a33d;margin:4px 0;">×0.8</div>
-              <div style="font-size:10px;color:rgba(255,255,255,0.5);">Rápida</div>
-            </div>
+          <div style="display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;">
+            <span style="font-size:16px;">🎯</span><div style="font-size:12px;color:rgba(255,255,255,0.65);"><strong style="color:rgba(255,255,255,0.9);">Formato:</strong> mejor de 5 vale ×1.0 (oficial), mejor de 3 vale ×0.8 (más rápida y corta).</div>
           </div>
         </div>
         <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;margin-bottom:14px;border-left:3px solid var(--va);">
-          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Fórmula completa</div>
-          <div style="font-family:Oswald,sans-serif;font-size:14px;color:var(--va);margin-bottom:4px;line-height:1.6;">Puntuación = Σ(multiplicador de tramo × peso del formato, por cada victoria) ÷ Σ(peso del formato, de cada partida jugada)</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.4);">El peso del formato afecta tanto a las victorias que sumas como a las "partidas equivalentes" sobre las que se calcula el promedio. El número de Ganadas/Jugadas que ves en la clasificación sigue siendo el real (sin redondear); solo la puntuación usa el peso.</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Fórmula</div>
+          <div style="font-family:Oswald,sans-serif;font-size:14px;color:var(--va);">Puntuación = (suma de tus victorias, cada una × tramo × formato) ÷ partidas jugadas</div>
         </div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo paso a paso</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo</div>
         <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:14px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:10px;">👤 Fon lleva 60 partidas: 40 al mejor de 5 (gana 30) y 20 al mejor de 3 (gana 10). Todas sus victorias están en el 1er tramo (×1.000, primeras 50 partidas equivalentes).</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">
-            <strong style="color:rgba(255,255,255,0.85);">Paso 1 — Puntuación de sus partidas al mejor de 5:</strong><br>
-            30 victorias × ×1.000 (tramo) × 1.0 (peso formato) = <strong style="color:var(--va);">30.0 pts</strong>
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;">👤 9 partidas jugadas, 4 ganadas (todas en el tramo ×1.000). De esas 4, una fue al mejor de 3.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.8;">
+            3 victorias al mejor de 5 → 3 × 1.000 × 1.0 = <strong style="color:var(--va);">3.0</strong><br>
+            1 victoria al mejor de 3 → 1 × 1.000 × 0.8 = <strong style="color:#e8a33d;">0.8</strong>
           </div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">
-            <strong style="color:rgba(255,255,255,0.85);">Paso 2 — Puntuación de sus partidas al mejor de 3:</strong><br>
-            10 victorias × ×1.000 (tramo) × 0.8 (peso formato) = <strong style="color:#e8a33d;">8.0 pts</strong>
-          </div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:10px;">
-            <strong style="color:rgba(255,255,255,0.85);">Paso 3 — Partidas equivalentes jugadas:</strong><br>
-            40×1.0 + 20×0.8 = <strong style="color:rgba(255,255,255,0.85);">56</strong> (en vez de 60 reales)
-          </div>
-          <div style="background:rgba(58,175,92,0.08);border-radius:6px;padding:10px;border-left:3px solid var(--va);">
-            <strong style="color:rgba(255,255,255,0.85);">Resultado:</strong> 30.0 + 8.0 = 38.0 pts ÷ 56 partidas equivalentes = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:15px;">0.679</strong><br>
-            <span style="font-size:10px;color:rgba(255,255,255,0.4);">En la clasificación se sigue viendo "40/60" (los datos reales), pero la puntuación 0.679 es la que decide su puesto.</span>
-          </div>
-        </div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplos comparativos</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
-            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador A — 50 partidas, 30 victorias</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">Todas en tramo ×1.000 → suma = 30 × 1.000 = <strong style="color:var(--va);">30.0</strong><br>Puntuación = 30.0 ÷ 50 = <strong style="color:var(--va);">0.600</strong> (60.0%)</div>
-          </div>
-          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
-            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador B — 100 partidas, 60 victorias</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 victorias en ×1.010 + 10 victorias en ×1.020<br>Suma = 30.0 + 20.2 + 10.2 = <strong style="color:var(--va);">60.4</strong><br>Puntuación = 60.4 ÷ 100 = <strong style="color:var(--va);">0.604</strong> (60.4%)</div>
-          </div>
-        </div>
-        <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);">
-          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;">
-            🏆 Ambos tienen el <strong style="color:rgba(255,255,255,0.8);">mismo % de victorias (60%)</strong>, pero el Jugador B tiene una puntuación superior por haber jugado más. Cuanto mayor sea la diferencia de partidas, más se nota. El <strong style="color:var(--va);">ganador de la liga será quien tenga la mayor puntuación acumulada al final de temporada</strong>.
+          <div style="background:rgba(58,175,92,0.08);border-radius:6px;padding:10px;border-left:3px solid var(--va);margin-top:8px;">
+            3.0 + 0.8 = 3.8 ÷ 9 partidas = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:16px;">0.422</strong>
           </div>
         </div>
         <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
@@ -663,10 +627,9 @@ function showWelcome(name){
         </div>
         <div style="margin-top:12px;padding:10px 12px;background:rgba(58,175,92,0.08);border-radius:8px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">
-            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo:</strong> Si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.010</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
-            📌 <strong style="color:rgba(255,255,255,0.8);">Formato:</strong> al registrar una partida hay que indicar si fue al mejor de 3 o al mejor de 5 — eso decide el peso (×0.8 o ×1.0) que se aplica.<br>
-            📌 Las temporadas anteriores (2024-25, 2025-26) se siguen midiendo por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>, sin pesos por formato.<br>
-            📌 El ganador de la liga 2026-27 es quien tenga la <strong style="color:rgba(255,255,255,0.8);">mayor puntuación acumulada</strong>.
+            📌 En la clasificación, <strong style="color:rgba(255,255,255,0.8);">G y J son siempre los datos reales</strong> (sin pesos) — solo la columna PTS usa tramo y formato.<br>
+            📌 Las temporadas anteriores (2024-25, 2025-26) se miden por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>, sin este sistema.<br>
+            📌 En caso de empate a puntuación, gana quien haya jugado más partidas.
           </div>
         </div>
       </div>
@@ -974,7 +937,6 @@ function computeStats(){
         const mw=fk==='3'?0.8:1.0; // peso: mejor de 5 = 1.0, mejor de 3 = 0.8
         matchCount[p]=(matchCount[p]||0)+mw;
         liveStats[p].j++;
-        liveStats[p].jEq=(liveStats[p].jEq||0)+mw;
         if(!liveStats[p].fmtBreak)liveStats[p].fmtBreak={'5':{j:0,g:0,scoreSum:0},'3':{j:0,g:0,scoreSum:0}};
         liveStats[p].fmtBreak[fk].j++;
         if(t.win){
@@ -987,11 +949,13 @@ function computeStats(){
           // Track wins per tramo
           const tramo=matchCount[p]<=50?0:Math.floor((matchCount[p]-51)/25)+1;
           if(!liveStats[p].tramoWins)liveStats[p].tramoWins={};
-          if(!liveStats[p].tramoWins[tramo])liveStats[p].tramoWins[tramo]={g:0,mult:mult};
+          if(!liveStats[p].tramoWins[tramo])liveStats[p].tramoWins[tramo]={g:0,mult:mult,pts:0};
           liveStats[p].tramoWins[tramo].g++;
+          liveStats[p].tramoWins[tramo].pts+=add;
         }
         // Update weighted average after each match (sobre partidas equivalentes)
-        liveStats[p].score=liveStats[p].jEq>0?(liveStats[p].scoreSum||0)/liveStats[p].jEq:0;
+        // Update weighted average after each match (puntos por victoria ÷ partidas jugadas reales)
+        liveStats[p].score=liveStats[p].j>0?(liveStats[p].scoreSum||0)/liveStats[p].j:0;
       });
     });
   });
@@ -1148,7 +1112,7 @@ function renderClassTable(pl,id,arrow,showAll,showBadge){
       const fb=ls.fmtBreak||{};
       const f5=fb['5']||{j:0,g:0,scoreSum:0},f3=fb['3']||{j:0,g:0,scoreSum:0};
       const fmtLine=(f5.j||f3.j)?'<div style="font-size:9px;color:rgba(255,255,255,0.28);margin-top:1px;">Mejor de 5: '+f5.j+'j ('+f5.scoreSum.toFixed(2)+' pts) &nbsp;+&nbsp; Mejor de 3: '+f3.j+'j ('+f3.scoreSum.toFixed(2)+' pts)</div>':'';
-      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+(ls.jEq||ls.j).toFixed(2)+'J·eq</div>'+fmtLine;
+      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+ls.j+'J</div>'+fmtLine;
     })();
     const formula=tramoBreak
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
@@ -1518,7 +1482,7 @@ function openPlayer(name){
     const tw=ls2627.tramoWins||{};
     const rows2=Object.entries(tw).map(([t,d])=>{
       const mult=tramoNames[parseInt(t)]||('×'+(1+parseInt(t)*0.01).toFixed(3));
-      const pts=(d.g*parseFloat(mult.replace('×',''))).toFixed(2);
+      const pts=(d.pts!==undefined?d.pts:d.g*parseFloat(mult.replace('×',''))).toFixed(2);
       return '<div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:4px;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px;">'+
         '<div style="color:rgba(255,255,255,0.5);">Tramo '+(parseInt(t)+1)+' <span style="color:var(--va);font-size:10px;">'+mult+'</span></div>'+
         '<div style="text-align:center;font-weight:700;">'+d.g+'</div>'+
@@ -1557,7 +1521,7 @@ function openPlayer(name){
         '</div>'+
         rows2+
         '<div style="display:grid;grid-template-columns:1fr auto;gap:4px;padding:8px 10px;background:rgba(58,175,92,0.08);border-top:1px solid rgba(58,175,92,0.2);">'+
-          '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+(ls2627.jEq||ls2627.j).toFixed(2)+' partidas equiv.</div>'+
+          '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+ls2627.j+' partidas jugadas</div>'+
           '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+(ls2627.score||0).toFixed(3)+'</div>'+
         '</div>'+
       '</div>'+
