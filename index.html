@@ -558,7 +558,7 @@ function showWelcome(name){
   <div class="tab-panel" id="tab-reglamento">
     <div style="display:flex;gap:8px;margin-bottom:12px;margin-top:16px;">
       <button class="htab active" id="rtab-btn-juego" onclick="setReglaTab('juego',this)">Reglas del Juego</button>
-      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Sistema de Puntos 2026-2027</button>
+      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Cómo se calcula el % 2026-2027</button>
     </div>
     <div id="rtab-juego">
     <div class="sec">Liga Mus Bruselas 38</div>
@@ -574,8 +574,7 @@ function showWelcome(name){
       <div class="regl-rule"><span class="regl-num">2</span><div>Para contabilizar, la partida debe ser jugada por al menos 3 jugadores de la liga.</div></div>
       <div class="regl-rule"><span class="regl-num">3</span><div>Para poder puntuar en la liga, deberás disputar un mínimo de 50 partidas.</div></div>
       <div class="regl-rule"><span class="regl-num">4</span><div>Si un jugador acumula más de 3 semanas sin participar en una partida, se le restarán 3 partidas ganadas de su historial.</div></div>
-      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga una mayor puntuación (ver Sistema de Puntos 2026-2027).</div></div>
-      <div class="regl-rule"><span class="regl-num">6</span><div>En caso de empate, ganará aquel jugador que haya jugado más partidas.</div></div>
+      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga un mayor porcentaje (ver "Cómo se calcula el % 2026-2027").</div></div>
     </div>
     <div class="sec">Estado de Jugadores</div>
     <div class="regl-hint">Días desde la última partida registrada</div>
@@ -583,30 +582,48 @@ function showWelcome(name){
     </div><!-- rtab-juego -->
 
     <div id="rtab-puntos" style="display:none;">
-      <div class="sec">Sistema de Puntos 2026-2027</div>
+      <div class="sec">Cómo se calcula el % 2026-2027</div>
       <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
-        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:14px;">
-          En 2026-2027 se usa un <strong style="color:var(--va);">promedio ponderado progresivo</strong>. El sistema premia a quien más juega: cuantas más partidas llevas, más valen tus victorias nuevas. Así, dos jugadores con el mismo porcentaje de victorias no empatan — gana quien más ha participado.
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:10px;">
+          La clasificación se ordena por <strong style="color:var(--va);">% de victorias</strong> — pero no es un % normal. En 2026-2027 tus victorias más recientes valen un poquito más cuantas más partidas llevas jugadas. Así, entre dos jugadores con el mismo % "a simple vista", queda por delante quien ha jugado (y ganado) más.
+        </p>
+        <p style="color:rgba(255,255,255,0.6);font-size:12px;line-height:1.7;margin-bottom:14px;">
+          En la práctica, esto significa que cada victoria no suma "1 partida ganada" tal cual — suma un poquito más, según en qué tramo de tu carrera la conseguiste (tabla más abajo). Al final, sigues dividiendo entre tus partidas jugadas, igual que un % normal.
         </p>
         <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;margin-bottom:14px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Fórmula</div>
-          <div style="font-family:Oswald,sans-serif;font-size:15px;color:var(--va);margin-bottom:4px;">Puntuación = Σ(multiplicador de cada victoria) ÷ partidas jugadas</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.4);">Igual que el promedio normal, pero cada victoria suma su multiplicador (según en qué tramo de partidas estabas cuando la ganaste) en vez de sumar 1.</div>
+          <div style="font-family:Oswald,sans-serif;font-size:14px;color:var(--va);margin-bottom:6px;line-height:1.5;">% = (suma de tus victorias, cada una con su multiplicador de tramo) ÷ partidas jugadas</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">Es un % de toda la vida (victorias ÷ jugadas) — el único cambio es que cada victoria no vale exactamente "1", vale un pelín más si la ganaste llevando ya muchas partidas encima.</div>
         </div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplos comparativos</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo 1 — dos jugadores con el mismo % "a simple vista"</div>
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
           <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
             <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador A — 50 partidas, 30 victorias</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">Todas en tramo ×1.000 → suma = 30 × 1.000 = <strong style="color:var(--va);">30.0</strong><br>Puntuación = 30.0 ÷ 50 = <strong style="color:var(--va);">0.600</strong> (60.0%)</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">Todas sus victorias caen en el tramo ×1.000 → 30 × 1.000 = <strong style="color:var(--va);">30.0</strong><br>% = 30.0 ÷ 50 = <strong style="color:var(--va);">60.0%</strong></div>
           </div>
           <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
             <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador B — 100 partidas, 60 victorias</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 victorias en ×1.010 + 10 victorias en ×1.020<br>Suma = 30.0 + 20.2 + 10.2 = <strong style="color:var(--va);">60.4</strong><br>Puntuación = 60.4 ÷ 100 = <strong style="color:var(--va);">0.604</strong> (60.4%)</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 en ×1.010 + 10 en ×1.020<br>Suma = 30.0 + 20.2 + 10.2 = <strong style="color:var(--va);">60.4</strong><br>% = 60.4 ÷ 100 = <strong style="color:var(--va);">60.4%</strong></div>
           </div>
         </div>
-        <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);margin-bottom:14px;">
+        <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);margin-bottom:18px;">
           <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;">
-            🏆 Ambos tienen el <strong style="color:rgba(255,255,255,0.8);">mismo % de victorias (60%)</strong>, pero el Jugador B tiene una puntuación superior por haber jugado más. Cuanto mayor sea la diferencia de partidas, más se nota. El <strong style="color:var(--va);">ganador de la liga será quien tenga la mayor puntuación acumulada al final de temporada</strong>.
+            🏆 Los dos ganan el <strong style="color:rgba(255,255,255,0.8);">60% de sus partidas</strong>, pero Jugador B queda por delante (60.4% vs 60.0%) por haber jugado el doble. Cuanta más diferencia de partidas, más se nota.
+          </div>
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo 2 — un jugador que pasa por varios tramos</div>
+        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:14px;">
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;">👤 Jugador C — 150 partidas, 90 victorias, repartidas así:</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.9;">
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 1 (1-50): gana 40 de 50</span><span style="color:var(--va);">40 × 1.000 = 40.0</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 2 (51-75): gana 20 de 25</span><span style="color:var(--va);">20 × 1.010 = 20.2</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 3 (76-100): gana 15 de 25</span><span style="color:var(--va);">15 × 1.020 = 15.3</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 4 (101-125): gana 10 de 25</span><span style="color:var(--va);">10 × 1.030 = 10.3</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 5 (126-150): gana 5 de 25</span><span style="color:var(--va);">5 × 1.040 = 5.2</span></div>
+          </div>
+          <div style="background:rgba(58,175,92,0.08);border-radius:6px;padding:10px;border-left:3px solid var(--va);margin-top:10px;">
+            Suma total = 40.0 + 20.2 + 15.3 + 10.3 + 5.2 = 91.0 ÷ 150 partidas = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:16px;">60.7%</strong>
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;">Su % "a simple vista" sería 90÷150 = 60.0% — el sistema le suma 0.7 puntos porcentuales extra por haber ganado partidas en tramos avanzados.</div>
           </div>
         </div>
         <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
@@ -625,10 +642,9 @@ function showWelcome(name){
         </div>
         <div style="margin-top:12px;padding:10px 12px;background:rgba(58,175,92,0.08);border-radius:8px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">
-            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo:</strong> Si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.010</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
-            📌 Las temporadas anteriores (2024-25, 2025-26) se siguen midiendo por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>.<br>
-            📌 En caso de empate a puntuación, gana quien haya jugado más partidas.<br>
-            📌 El ganador de la liga 2026-27 es quien tenga la <strong style="color:rgba(255,255,255,0.8);">mayor puntuación acumulada</strong>.
+            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo rápido:</strong> si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.010</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
+            📌 Las temporadas anteriores (2024-25, 2025-26) se miden por <strong style="color:rgba(255,255,255,0.8);">% de victorias simple</strong>, sin tramos.<br>
+            📌 El ganador de la liga 2026-27 es quien tenga el <strong style="color:rgba(255,255,255,0.8);">% más alto</strong> al final de temporada.
           </div>
         </div>
       </div>
@@ -1063,23 +1079,19 @@ function renderCompResult(){
 function renderClassTable(pl,id,arrow,showAll,showBadge){
   const el=document.getElementById(id);const list=showAll?pl:pl.filter(p=>p.j>0);if(!list.length){el.innerHTML='';return;}
   const withG=list.filter(p=>p.j>0);const maxG=Math.max(...withG.map(p=>p.g),1);
-  el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">'+(showBadge?'PTS':'%')+'</div></div>'+
+  el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">%'+(showBadge?'<sup style="font-size:8px;">T</sup>':'')+'</div></div>'+
+  (showBadge?'<div style="font-size:9px;color:rgba(255,255,255,0.3);padding:2px 12px 6px;">ᵀ incluye el multiplicador por tramo — ver "Cómo se calcula el %"</div>':'')+
   list.map(function(p){const rank=withG.indexOf(p);
     const nextMult=showBadge&&liveStats[p.name]&&liveStats[p.name].j>0?getMultiplier(liveStats[p.name].j+1).toFixed(3):'';
-    const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:1px 4px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:4px;">×'+nextMult+'</span>':'';
+    const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:2px 6px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:8px;">×'+nextMult+'</span>':'';
     const ls=liveStats[p.name];
-    const tramoBreak=(()=>{
-      if(!showBadge||!ls||!ls.tramoWins)return '';
-      const tramoNames=['×1.000','×1.010','×1.020','×1.030','×1.040','×1.050','×1.060'];
-      const parts=Object.entries(ls.tramoWins).map(([t,d])=>d.g+'vic '+tramoNames[t]).join(' + ');
-      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+ls.j+'J</div>';
-    })();
+    const tramoHint=(arrow&&showBadge&&ls&&ls.tramoWins)?'<div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:2px;">Toca para ver el cálculo →</div>':'';
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
     '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
     '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
-    (arrow?tramoBreak:'')+
+    tramoHint+
     '</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>'+
-    '<div class="cpct '+(p.j>0?'has':'')+'">'+( showBadge&&ls&&ls.j>0?(ls.score||0).toFixed(3):pctS(p.g,p.j))+'</div>'+
+    '<div class="cpct '+(p.j>0?'has':'')+'">'+( showBadge&&ls&&ls.j>0?((ls.score||0)*100).toFixed(1)+'%':pctS(p.g,p.j))+'</div>'+
     (arrow?'<div class="carr">›</div>':'')+
     '</div>';}).join('');
 }
@@ -1431,7 +1443,7 @@ function openPlayer(name){
   const ptsPct=ls2627pre&&ls2627pre.j>0?((ls2627pre.score||0)*100).toFixed(1)+'%':'—';
   document.getElementById('mp-pct').textContent=ptsPct;
   const mpl=document.querySelector('#mp-pct')?document.getElementById('mp-pct').parentElement.querySelector('.mpct-l'):null;
-  if(mpl)mpl.textContent='Puntuación (2026-2027)';
+  if(mpl)mpl.textContent='% (2026-2027, con tramo)';
   document.getElementById('mp-bar').style.width=ls2627pre&&ls2627pre.j?((ls2627pre.score||0)*100).toFixed(0)+'%':'0%';
   document.getElementById('mp-stats').innerHTML=
     '<div class="msbox" style="cursor:pointer" onclick="openPlayerMatches(\''+name+'\',\'win\')"><div class="msbox-v" style="color:var(--va)">'+p.g+'</div><div class="msbox-l">Ganadas</div><div style="font-size:9px;color:rgba(255,255,255,0.25);margin-top:2px">ver →</div></div>'+
@@ -1455,18 +1467,19 @@ function openPlayer(name){
     }).join('');
     const total=(ls2627.scoreSum||0).toFixed(2);
     scoreEl.innerHTML=
-      '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Puntuación 2026-2027</div>'+
+      '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Cálculo del % 2026-2027</div>'+
       '<div style="background:rgba(0,0,0,0.2);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">'+
         '<div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:4px;padding:6px 10px;background:rgba(0,0,0,0.2);">'+
           '<div style="font-size:9px;color:rgba(255,255,255,0.3);">TRAMO</div>'+
           '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;">VIC</div>'+
           '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:center;">MULT</div>'+
-          '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:right;">PTS</div>'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.3);text-align:right;">APORTA</div>'+
         '</div>'+
         rows2+
+        '<div style="padding:6px 10px;font-size:10px;color:rgba(255,255,255,0.35);border-top:1px solid rgba(255,255,255,0.05);">Resultado % con tramo:</div>'+
         '<div style="display:grid;grid-template-columns:1fr auto;gap:4px;padding:8px 10px;background:rgba(58,175,92,0.08);border-top:1px solid rgba(58,175,92,0.2);">'+
           '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+ls2627.j+' partidas jugadas</div>'+
-          '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+(ls2627.score||0).toFixed(3)+'</div>'+
+          '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+((ls2627.score||0)*100).toFixed(1)+'%</div>'+
         '</div>'+
       '</div>';
     scoreEl.style.display='block';
