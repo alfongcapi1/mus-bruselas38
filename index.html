@@ -558,7 +558,7 @@ function showWelcome(name){
   <div class="tab-panel" id="tab-reglamento">
     <div style="display:flex;gap:8px;margin-bottom:12px;margin-top:16px;">
       <button class="htab active" id="rtab-btn-juego" onclick="setReglaTab('juego',this)">Reglas del Juego</button>
-      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Cómo se calcula el % 2026-2027</button>
+      <button class="htab" id="rtab-btn-puntos" onclick="setReglaTab('puntos',this)">Sistema de Puntos 2026-2027</button>
     </div>
     <div id="rtab-juego">
     <div class="sec">Liga Mus Bruselas 38</div>
@@ -574,7 +574,7 @@ function showWelcome(name){
       <div class="regl-rule"><span class="regl-num">2</span><div>Para contabilizar, la partida debe ser jugada por al menos 3 jugadores de la liga.</div></div>
       <div class="regl-rule"><span class="regl-num">3</span><div>Para poder puntuar en la liga, deberás disputar un mínimo de 50 partidas.</div></div>
       <div class="regl-rule"><span class="regl-num">4</span><div>Si un jugador acumula más de 3 semanas sin participar en una partida, se le restarán 3 partidas ganadas de su historial.</div></div>
-      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga un mayor porcentaje (ver "Cómo se calcula el % 2026-2027").</div></div>
+      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga un mayor porcentaje (ver "Sistema de Puntos 2026-2027").</div></div>
     </div>
     <div class="sec">Estado de Jugadores</div>
     <div class="regl-hint">Días desde la última partida registrada</div>
@@ -582,7 +582,7 @@ function showWelcome(name){
     </div><!-- rtab-juego -->
 
     <div id="rtab-puntos" style="display:none;">
-      <div class="sec">Cómo se calcula el % 2026-2027</div>
+      <div class="sec">Sistema de Puntos 2026-2027</div>
       <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
         <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:10px;">
           La clasificación se ordena por <strong style="color:var(--va);">% de victorias</strong> — pero no es un % normal. En 2026-2027 tus victorias más recientes valen un poquito más cuantas más partidas llevas jugadas. Así, entre dos jugadores con el mismo % "a simple vista", queda por delante quien ha jugado (y ganado) más.
@@ -603,12 +603,12 @@ function showWelcome(name){
           </div>
           <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
             <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador B — 100 partidas, 60 victorias</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 en ×1.010 + 10 en ×1.020<br>Suma = 30.0 + 20.2 + 10.2 = <strong style="color:var(--va);">60.4</strong><br>% = 60.4 ÷ 100 = <strong style="color:var(--va);">60.4%</strong></div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 en ×1.005 + 10 en ×1.010<br>Suma = 30.0 + 20.1 + 10.1 = <strong style="color:var(--va);">60.2</strong><br>% = 60.2 ÷ 100 = <strong style="color:var(--va);">60.2%</strong></div>
           </div>
         </div>
         <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);margin-bottom:18px;">
           <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;">
-            🏆 Los dos ganan el <strong style="color:rgba(255,255,255,0.8);">60% de sus partidas</strong>, pero Jugador B queda por delante (60.4% vs 60.0%) por haber jugado el doble. Cuanta más diferencia de partidas, más se nota.
+            🏆 Los dos ganan el <strong style="color:rgba(255,255,255,0.8);">60% de sus partidas</strong>, pero Jugador B queda por delante (60.2% vs 60.0%) por haber jugado el doble. Cuanta más diferencia de partidas, más se nota.
           </div>
         </div>
         <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo 2 — un jugador que pasa por varios tramos</div>
@@ -616,14 +616,14 @@ function showWelcome(name){
           <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;">👤 Jugador C — 150 partidas, 90 victorias, repartidas así:</div>
           <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.9;">
             <div style="display:flex;justify-content:space-between;"><span>Tramo 1 (1-50): gana 40 de 50</span><span style="color:var(--va);">40 × 1.000 = 40.0</span></div>
-            <div style="display:flex;justify-content:space-between;"><span>Tramo 2 (51-75): gana 20 de 25</span><span style="color:var(--va);">20 × 1.010 = 20.2</span></div>
-            <div style="display:flex;justify-content:space-between;"><span>Tramo 3 (76-100): gana 15 de 25</span><span style="color:var(--va);">15 × 1.020 = 15.3</span></div>
-            <div style="display:flex;justify-content:space-between;"><span>Tramo 4 (101-125): gana 10 de 25</span><span style="color:var(--va);">10 × 1.030 = 10.3</span></div>
-            <div style="display:flex;justify-content:space-between;"><span>Tramo 5 (126-150): gana 5 de 25</span><span style="color:var(--va);">5 × 1.040 = 5.2</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 2 (51-75): gana 20 de 25</span><span style="color:var(--va);">20 × 1.005 = 20.1</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 3 (76-100): gana 15 de 25</span><span style="color:var(--va);">15 × 1.010 = 15.15</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 4 (101-125): gana 10 de 25</span><span style="color:var(--va);">10 × 1.015 = 10.15</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Tramo 5 (126-150): gana 5 de 25</span><span style="color:var(--va);">5 × 1.020 = 5.1</span></div>
           </div>
           <div style="background:rgba(58,175,92,0.08);border-radius:6px;padding:10px;border-left:3px solid var(--va);margin-top:10px;">
-            Suma total = 40.0 + 20.2 + 15.3 + 10.3 + 5.2 = 91.0 ÷ 150 partidas = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:16px;">60.7%</strong>
-            <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;">Su % "a simple vista" sería 90÷150 = 60.0% — el sistema le suma 0.7 puntos porcentuales extra por haber ganado partidas en tramos avanzados.</div>
+            Suma total = 40.0 + 20.1 + 15.15 + 10.15 + 5.1 = 90.5 ÷ 150 partidas = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:16px;">60.3%</strong>
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;">Su % "a simple vista" sería 90÷150 = 60.0% — el sistema le suma 0.3 puntos porcentuales extra por haber ganado partidas en tramos avanzados.</div>
           </div>
         </div>
         <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
@@ -633,16 +633,16 @@ function showWelcome(name){
             <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-align:right;">MULTIPLICADOR</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">1º</div><div style="font-size:13px;font-weight:600;text-align:center;">1 – 50</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.000</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">2º</div><div style="font-size:13px;font-weight:600;text-align:center;">51 – 75</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.010</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">3º</div><div style="font-size:13px;font-weight:600;text-align:center;">76 – 100</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.020</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">4º</div><div style="font-size:13px;font-weight:600;text-align:center;">101 – 125</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.030</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">5º</div><div style="font-size:13px;font-weight:600;text-align:center;">126 – 150</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.040</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">6º</div><div style="font-size:13px;font-weight:600;text-align:center;">151 – 175</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.050</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">…</div><div style="font-size:13px;font-weight:600;text-align:center;">+25 partidas</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">+×0.010</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">2º</div><div style="font-size:13px;font-weight:600;text-align:center;">51 – 75</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.005</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">3º</div><div style="font-size:13px;font-weight:600;text-align:center;">76 – 100</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.010</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">4º</div><div style="font-size:13px;font-weight:600;text-align:center;">101 – 125</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.015</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">5º</div><div style="font-size:13px;font-weight:600;text-align:center;">126 – 150</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.020</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">6º</div><div style="font-size:13px;font-weight:600;text-align:center;">151 – 175</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">×1.025</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 12px;border-top:1px solid rgba(255,255,255,0.05);"><div style="font-size:12px;color:rgba(255,255,255,0.5);">…</div><div style="font-size:13px;font-weight:600;text-align:center;">+25 partidas</div><div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:var(--va);text-align:right;">+×0.005</div></div>
         </div>
         <div style="margin-top:12px;padding:10px 12px;background:rgba(58,175,92,0.08);border-radius:8px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">
-            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo rápido:</strong> si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.010</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
+            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo rápido:</strong> si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.005</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
             📌 Las temporadas anteriores (2024-25, 2025-26) se miden por <strong style="color:rgba(255,255,255,0.8);">% de victorias simple</strong>, sin tramos.<br>
             📌 El ganador de la liga 2026-27 es quien tenga el <strong style="color:rgba(255,255,255,0.8);">% más alto</strong> al final de temporada.
           </div>
@@ -895,7 +895,7 @@ function getMultiplier(matchNum){
   if(matchNum<=50) return 1.000;
   const extra=matchNum-50;
   const tramo=Math.floor((extra-1)/25);
-  return 1.000+(tramo+1)*0.010;
+  return 1.000+(tramo+1)*0.005;
 }
 
 function computeStats(){
@@ -1080,12 +1080,11 @@ function renderClassTable(pl,id,arrow,showAll,showBadge){
   const el=document.getElementById(id);const list=showAll?pl:pl.filter(p=>p.j>0);if(!list.length){el.innerHTML='';return;}
   const withG=list.filter(p=>p.j>0);const maxG=Math.max(...withG.map(p=>p.g),1);
   el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">%'+(showBadge?'<sup style="font-size:8px;">T</sup>':'')+'</div></div>'+
-  (showBadge?'<div style="font-size:9px;color:rgba(255,255,255,0.3);padding:2px 12px 6px;">ᵀ incluye el multiplicador por tramo — ver "Cómo se calcula el %"</div>':'')+
   list.map(function(p){const rank=withG.indexOf(p);
     const nextMult=showBadge&&liveStats[p.name]&&liveStats[p.name].j>0?getMultiplier(liveStats[p.name].j+1).toFixed(3):'';
     const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:2px 6px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:8px;">×'+nextMult+'</span>':'';
     const ls=liveStats[p.name];
-    const tramoHint=(arrow&&showBadge&&ls&&ls.tramoWins)?'<div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:2px;">Toca para ver el cálculo →</div>':'';
+    const tramoHint=(arrow&&showBadge&&ls&&ls.tramoWins)?'<div style="font-size:9px;color:rgba(255,255,255,0.3);margin-top:5px;">Toca para ver el cálculo →</div>':'';
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
     '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
     '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
@@ -1130,7 +1129,11 @@ function renderStats(){
   const leader=pl[0];
   sg.innerHTML='<div class="scard"><div class="sval">'+totalPartidas+'</div><div class="slbl">Partidas '+(isAll?'Históricas':'Jugadas')+'</div></div><div class="scard"><div class="sval">'+pl.length+'</div><div class="slbl">Jugadores</div></div><div class="scard full"><div class="sval">'+leader.name+'</div><div class="slbl">Líder '+(isAll?'Histórico':statsSeason)+'</div><div class="ssub">'+pctS(leader.g,leader.j)+' · '+leader.g+'/'+leader.j+'</div></div>';
   const maxP=Math.max(...pl.map(p=>p.p),0.01);
-  sb.innerHTML=pl.map(p=>{const col=p.p>=0.55?'#3aaf5c':p.p>=0.45?'rgba(255,255,255,0.65)':'#e74c3c';return '<div class="bar-item"><div class="bname">'+p.name+'</div><div class="btrack"><div class="bfill" style="width:'+(p.p/maxP*100).toFixed(0)+'%;background:linear-gradient(90deg,'+col+'55,'+col+');"><span class="bfill-v">'+pctS(p.g,p.j)+'</span></div></div><div class="bright">'+p.g+'/'+p.j+'</div></div>';}).join('');
+  sb.innerHTML=pl.map((p,idx)=>{
+    const redFrom=pl.length-4;
+    const col=isAll?'rgba(255,255,255,0.65)':(idx<3?'#3aaf5c':(idx>=redFrom?'#e74c3c':'rgba(255,255,255,0.65)'));
+    return '<div class="bar-item"><div class="bname">'+p.name+'</div><div class="btrack"><div class="bfill" style="width:'+(p.p/maxP*100).toFixed(0)+'%;background:linear-gradient(90deg,'+col+'55,'+col+');"><span class="bfill-v">'+pctS(p.g,p.j)+'</span></div></div><div class="bright">'+p.g+'/'+p.j+'</div></div>';
+  }).join('');
   renderPairs(pairs,'bw','ptable');
   // Juegos por jugador
   const gameMap={};
@@ -1453,7 +1456,7 @@ function openPlayer(name){
   const ls2627=liveStats[name];
   const scoreEl=document.getElementById('mp-score-breakdown');
   if(scoreEl&&ls2627&&ls2627.j>0){
-    const tramoNames=['×1.000','×1.010','×1.020','×1.030','×1.040','×1.050','×1.060'];
+    const tramoNames=['×1.000','×1.005','×1.010','×1.015','×1.020','×1.025','×1.030'];
     const tw=ls2627.tramoWins||{};
     const rows2=Object.entries(tw).map(([t,d])=>{
       const mult=tramoNames[parseInt(t)]||('×'+(1+parseInt(t)*0.01).toFixed(3));
