@@ -585,30 +585,28 @@ function showWelcome(name){
     <div id="rtab-puntos" style="display:none;">
       <div class="sec">Sistema de Puntos 2026-2027</div>
       <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
-        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.6;margin-bottom:12px;">
-          El ganador de la liga es quien tenga la <strong style="color:var(--va);">mayor puntuación</strong> (no el mayor % de victorias). Dos cosas hacen que una victoria valga más o menos:
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:14px;">
+          En 2026-2027 se usa un <strong style="color:var(--va);">promedio ponderado progresivo</strong>. El sistema premia a quien más juega: cuantas más partidas llevas, más valen tus victorias nuevas. Así, dos jugadores con el mismo porcentaje de victorias no empatan — gana quien más ha participado.
         </p>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
-          <div style="display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;">
-            <span style="font-size:16px;">📈</span><div style="font-size:12px;color:rgba(255,255,255,0.65);"><strong style="color:rgba(255,255,255,0.9);">Tramo:</strong> cuantas más partidas llevas jugadas, más vale cada victoria nueva (tabla abajo).</div>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 12px;">
-            <span style="font-size:16px;">🎯</span><div style="font-size:12px;color:rgba(255,255,255,0.65);"><strong style="color:rgba(255,255,255,0.9);">Formato:</strong> mejor de 5 vale ×1.0 (oficial), mejor de 3 vale ×0.8 (más rápida y corta).</div>
-          </div>
-        </div>
         <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;margin-bottom:14px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Fórmula</div>
-          <div style="font-family:Oswald,sans-serif;font-size:14px;color:var(--va);">Puntuación = (suma de tus victorias, cada una × tramo × formato) ÷ partidas jugadas</div>
+          <div style="font-family:Oswald,sans-serif;font-size:15px;color:var(--va);margin-bottom:4px;">Puntuación = Σ(multiplicador de cada victoria) ÷ partidas jugadas</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">Igual que el promedio normal, pero cada victoria suma su multiplicador (según en qué tramo de partidas estabas cuando la ganaste) en vez de sumar 1.</div>
         </div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplo</div>
-        <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:14px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:8px;">👤 9 partidas jugadas, 4 ganadas (todas en el tramo ×1.000). De esas 4, una fue al mejor de 3.</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.8;">
-            3 victorias al mejor de 5 → 3 × 1.000 × 1.0 = <strong style="color:var(--va);">3.0</strong><br>
-            1 victoria al mejor de 3 → 1 × 1.000 × 0.8 = <strong style="color:#e8a33d;">0.8</strong>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Ejemplos comparativos</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador A — 50 partidas, 30 victorias</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">Todas en tramo ×1.000 → suma = 30 × 1.000 = <strong style="color:var(--va);">30.0</strong><br>Puntuación = 30.0 ÷ 50 = <strong style="color:var(--va);">0.600</strong> (60.0%)</div>
           </div>
-          <div style="background:rgba(58,175,92,0.08);border-radius:6px;padding:10px;border-left:3px solid var(--va);margin-top:8px;">
-            3.0 + 0.8 = 3.8 ÷ 9 partidas = <strong style="color:var(--va);font-family:Oswald,sans-serif;font-size:16px;">0.422</strong>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:6px;">👤 Jugador B — 100 partidas, 60 victorias</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;">30 victorias en ×1.000 + 20 victorias en ×1.010 + 10 victorias en ×1.020<br>Suma = 30.0 + 20.2 + 10.2 = <strong style="color:var(--va);">60.4</strong><br>Puntuación = 60.4 ÷ 100 = <strong style="color:var(--va);">0.604</strong> (60.4%)</div>
+          </div>
+        </div>
+        <div style="background:rgba(58,175,92,0.08);border-radius:8px;padding:10px 12px;border-left:3px solid var(--va);margin-bottom:14px;">
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;">
+            🏆 Ambos tienen el <strong style="color:rgba(255,255,255,0.8);">mismo % de victorias (60%)</strong>, pero el Jugador B tiene una puntuación superior por haber jugado más. Cuanto mayor sea la diferencia de partidas, más se nota. El <strong style="color:var(--va);">ganador de la liga será quien tenga la mayor puntuación acumulada al final de temporada</strong>.
           </div>
         </div>
         <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
@@ -627,9 +625,10 @@ function showWelcome(name){
         </div>
         <div style="margin-top:12px;padding:10px 12px;background:rgba(58,175,92,0.08);border-radius:8px;border-left:3px solid var(--va);">
           <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;">
-            📌 En la clasificación, <strong style="color:rgba(255,255,255,0.8);">G y J son siempre los datos reales</strong> (sin pesos) — solo la columna PTS usa tramo y formato.<br>
-            📌 Las temporadas anteriores (2024-25, 2025-26) se miden por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>, sin este sistema.<br>
-            📌 En caso de empate a puntuación, gana quien haya jugado más partidas.
+            📌 <strong style="color:rgba(255,255,255,0.8);">Ejemplo:</strong> Si llevas 60 partidas y ganas, esa victoria vale <strong style="color:var(--va);">×1.010</strong> en vez de ×1.000 (estás en el 2º tramo, partidas 51-75).<br>
+            📌 Las temporadas anteriores (2024-25, 2025-26) se siguen midiendo por <strong style="color:rgba(255,255,255,0.8);">promedio de victorias</strong>.<br>
+            📌 En caso de empate a puntuación, gana quien haya jugado más partidas.<br>
+            📌 El ganador de la liga 2026-27 es quien tenga la <strong style="color:rgba(255,255,255,0.8);">mayor puntuación acumulada</strong>.
           </div>
         </div>
       </div>
@@ -702,19 +701,6 @@ function showWelcome(name){
         </div>
       </div>
       <div class="fgroup">
-        <label class="flbl">Formato de la partida</label>
-        <div class="wbtns" id="fmt-wrap" style="gap:8px;">
-          <button type="button" class="wbtn fmt-btn sel" id="fmt5" onclick="selFmt('5')" style="padding:10px 8px;">
-            <div style="font-family:Oswald,sans-serif;font-weight:700;font-size:14px;">Mejor de 5</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px;">Oficial · vale 1.0</div>
-          </button>
-          <button type="button" class="wbtn fmt-btn" id="fmt3" onclick="selFmt('3')" style="padding:10px 8px;">
-            <div style="font-family:Oswald,sans-serif;font-weight:700;font-size:14px;">Mejor de 3</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px;">Rápida · vale 0.8</div>
-          </button>
-        </div>
-      </div>
-      <div class="fgroup">
         <label class="flbl">Puntos</label>
         <div class="pts-row">
           <div class="pts-group">
@@ -777,7 +763,6 @@ const SCRIPT='https://script.google.com/macros/s/AKfycbznXIbc7SD9iDu9QgPnzgIcOgX
 let rows=[],liveStats={},livePairs={};
 let histSel='2026-2027';
 let fSel={p1a:null,p1b:null,p2a:null,p2b:null};
-let selFormato='5';
 let selWinner=0,selPts={p1:null,p2:null};
 let compSel=[];
 
@@ -862,14 +847,6 @@ function parseFromScript(data){
     const keys=Object.keys(row);
     if(keys.length<6)return;
     const vals=Object.values(row);
-    // Formato de partida (mejor de 3 / mejor de 5): buscamos una columna cuyo nombre lo sugiera.
-    // Si el Google Form/Sheet todavía no tiene esa columna, se asume '5' (peso 1.0, sin cambios).
-    let formato='5';
-    const fKey=keys.find(k=>/formato|mejor/i.test(k));
-    if(fKey){
-      const fv=String(row[fKey]||'');
-      if(fv.indexOf('3')!==-1)formato='3';
-    }
     rows.push({
       fecha:String(vals[0]||''),
       p1a:String(vals[1]||'').trim(),
@@ -879,8 +856,7 @@ function parseFromScript(data){
       ganador:String(vals[5]||'').trim(),
       pts1:parseInt(vals[6])||0,
       pts2:parseInt(vals[7])||0,
-      registradaPor:String(vals[8]||'').trim(),
-      formato
+      registradaPor:String(vals[8]||'').trim()
     });
   });
   computeStats();
@@ -889,14 +865,10 @@ function parseFromScript(data){
 function parseSheet(csv){
   const lines=csv.trim().split('\n');
   rows=[];
-  const header=parseCSV(lines[0]||'');
-  const fIdx=header.findIndex(h=>/formato|mejor/i.test(h));
   for(let i=1;i<lines.length;i++){
     const c=parseCSV(lines[i]);
     if(c.length<6)continue;
-    let formato='5';
-    if(fIdx>=0&&(c[fIdx]||'').indexOf('3')!==-1)formato='3';
-    rows.push({fecha:c[0]||'',p1a:(c[1]||'').trim(),p1b:(c[2]||'').trim(),p2a:(c[3]||'').trim(),p2b:(c[4]||'').trim(),ganador:(c[5]||'').trim(),pts1:parseInt(c[6])||0,pts2:parseInt(c[7])||0,registradaPor:(c[8]||'').trim(),formato});
+    rows.push({fecha:c[0]||'',p1a:(c[1]||'').trim(),p1b:(c[2]||'').trim(),p2a:(c[3]||'').trim(),p2b:(c[4]||'').trim(),ganador:(c[5]||'').trim(),pts1:parseInt(c[6])||0,pts2:parseInt(c[7])||0,registradaPor:(c[8]||'').trim()});
   }
   computeStats();
 }
@@ -933,28 +905,19 @@ function computeStats(){
       t.pl.forEach(p=>{
         if(!p||p==='Castigo')return;
         if(!liveStats[p])liveStats[p]={g:0,j:0,score:0};
-        const fk=row.formato==='3'?'3':'5';
-        const mw=fk==='3'?0.8:1.0; // peso: mejor de 5 = 1.0, mejor de 3 = 0.8
-        matchCount[p]=(matchCount[p]||0)+mw;
+        matchCount[p]=(matchCount[p]||0)+1;
         liveStats[p].j++;
-        if(!liveStats[p].fmtBreak)liveStats[p].fmtBreak={'5':{j:0,g:0,scoreSum:0},'3':{j:0,g:0,scoreSum:0}};
-        liveStats[p].fmtBreak[fk].j++;
         if(t.win){
           liveStats[p].g++;
           const mult=getMultiplier(matchCount[p]);
-          const add=mult*mw;
-          liveStats[p].scoreSum=(liveStats[p].scoreSum||0)+add;
-          liveStats[p].fmtBreak[fk].g++;
-          liveStats[p].fmtBreak[fk].scoreSum+=add;
+          liveStats[p].scoreSum=(liveStats[p].scoreSum||0)+mult;
           // Track wins per tramo
           const tramo=matchCount[p]<=50?0:Math.floor((matchCount[p]-51)/25)+1;
           if(!liveStats[p].tramoWins)liveStats[p].tramoWins={};
-          if(!liveStats[p].tramoWins[tramo])liveStats[p].tramoWins[tramo]={g:0,mult:mult,pts:0};
+          if(!liveStats[p].tramoWins[tramo])liveStats[p].tramoWins[tramo]={g:0,mult:mult};
           liveStats[p].tramoWins[tramo].g++;
-          liveStats[p].tramoWins[tramo].pts+=add;
         }
-        // Update weighted average after each match (sobre partidas equivalentes)
-        // Update weighted average after each match (puntos por victoria ÷ partidas jugadas reales)
+        // Update weighted average after each match
         liveStats[p].score=liveStats[p].j>0?(liveStats[p].scoreSum||0)/liveStats[p].j:0;
       });
     });
@@ -1100,28 +1063,22 @@ function renderCompResult(){
 function renderClassTable(pl,id,arrow,showAll,showBadge){
   const el=document.getElementById(id);const list=showAll?pl:pl.filter(p=>p.j>0);if(!list.length){el.innerHTML='';return;}
   const withG=list.filter(p=>p.j>0);const maxG=Math.max(...withG.map(p=>p.g),1);
-  const hdr=showBadge
-    ? '<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;font-size:9px;">G·MEJOR 5</div><div class="chdr" style="text-align:center;font-size:9px;">G·MEJOR 3</div><div class="chdr" style="text-align:center;">PTS</div></div>'
-    : '<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">%</div></div>';
-  el.innerHTML=hdr+
+  el.innerHTML='<div class="crow hdr"><div></div><div class="chdr l">Jugador</div><div class="chdr" style="text-align:center;">G</div><div class="chdr" style="text-align:center;">J</div><div class="chdr" style="text-align:center;">'+(showBadge?'PTS':'%')+'</div></div>'+
   list.map(function(p){const rank=withG.indexOf(p);
     const nextMult=showBadge&&liveStats[p.name]&&liveStats[p.name].j>0?getMultiplier(liveStats[p.name].j+1).toFixed(3):'';
     const badge=nextMult?'<span style="font-size:9px;color:var(--va);padding:1px 4px;border-radius:3px;background:rgba(58,175,92,0.12);margin-left:4px;">×'+nextMult+'</span>':'';
     const ls=liveStats[p.name];
-    const fb=(ls&&ls.fmtBreak)||{};
-    const f5=fb['5']||{j:0,g:0},f3=fb['3']||{j:0,g:0};
-    const tramoHint=(()=>{
-      if(!showBadge||!ls||!ls.j)return '';
-      return '<div style="font-size:9px;color:rgba(255,255,255,0.28);margin-top:2px;">toca para ver el desglose completo →</div>';
+    const tramoBreak=(()=>{
+      if(!showBadge||!ls||!ls.tramoWins)return '';
+      const tramoNames=['×1.000','×1.010','×1.020','×1.030','×1.040','×1.050','×1.060'];
+      const parts=Object.entries(ls.tramoWins).map(([t,d])=>d.g+'vic '+tramoNames[t]).join(' + ');
+      return '<div style="font-size:9px;color:rgba(255,255,255,0.22);margin-top:2px;">'+parts+' = '+(ls.scoreSum||0).toFixed(2)+' ÷ '+ls.j+'J</div>';
     })();
     return '<div class="crow" '+(arrow?'onclick="openPlayer(\''+p.name+'\')"':'')+'>'+
     '<div class="cpos '+(rank===0?'r1':rank===1?'r2':rank===2?'r3':'')+'">'+(p.j>0?(rank+1)+'º':'-')+'</div>'+
     '<div class="cmain"><div class="cname"><div class="cav-sm">'+avHTML(p.name)+'</div>'+p.name+badge+'</div>'+
-    (arrow?tramoHint:'')+
-    '</div>'+
-    (showBadge
-      ?'<div class="cgj" style="text-align:center;">'+(p.j>0?f5.g+'/'+f5.j:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?f3.g+'/'+f3.j:'-')+'</div>'
-      :'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>')+
+    (arrow?tramoBreak:'')+
+    '</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.g:'-')+'</div>'+'<div class="cgj" style="text-align:center;">'+(p.j>0?p.j:'-')+'</div>'+
     '<div class="cpct '+(p.j>0?'has':'')+'">'+( showBadge&&ls&&ls.j>0?(ls.score||0).toFixed(3):pctS(p.g,p.j))+'</div>'+
     (arrow?'<div class="carr">›</div>':'')+
     '</div>';}).join('');
@@ -1497,25 +1454,6 @@ function openPlayer(name){
         '</div>';
     }).join('');
     const total=(ls2627.scoreSum||0).toFixed(2);
-    const scoreVal=((ls2627.score||0)*100).toFixed(1);
-    const fb=ls2627.fmtBreak||{};
-    const f5=fb['5']||{j:0,g:0,scoreSum:0},f3=fb['3']||{j:0,g:0,scoreSum:0};
-    const fmtBlock=(f5.j||f3.j)?(
-      '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px;">Desglose por formato</div>'+
-      '<div style="display:flex;gap:8px;">'+
-        '<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.06);">'+
-          '<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);">Mejor de 5 <span style="color:var(--va);font-size:9px;">×1.0</span></div>'+
-          '<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;">'+f5.g+' de '+f5.j+' jugadas</div>'+
-          '<div style="font-family:Oswald,sans-serif;font-size:16px;font-weight:700;color:var(--va);margin-top:4px;">'+f5.scoreSum.toFixed(2)+' pts</div>'+
-        '</div>'+
-        '<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.06);">'+
-          '<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);">Mejor de 3 <span style="color:#e8a33d;font-size:9px;">×0.8</span></div>'+
-          '<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;">'+f3.g+' de '+f3.j+' jugadas</div>'+
-          '<div style="font-family:Oswald,sans-serif;font-size:16px;font-weight:700;color:#e8a33d;margin-top:4px;">'+f3.scoreSum.toFixed(2)+' pts</div>'+
-        '</div>'+
-      '</div>'+
-      '<div style="text-align:center;font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;">'+f5.scoreSum.toFixed(2)+' + '+f3.scoreSum.toFixed(2)+' = <strong style="color:rgba(255,255,255,0.8);">'+total+' pts</strong> en total</div>'
-    ):'';
     scoreEl.innerHTML=
       '<div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Puntuación 2026-2027</div>'+
       '<div style="background:rgba(0,0,0,0.2);border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">'+
@@ -1530,8 +1468,7 @@ function openPlayer(name){
           '<div style="font-size:11px;color:rgba(255,255,255,0.6);">'+total+' ÷ '+ls2627.j+' partidas jugadas</div>'+
           '<div style="font-family:Oswald,sans-serif;font-size:18px;font-weight:700;color:var(--va);">'+(ls2627.score||0).toFixed(3)+'</div>'+
         '</div>'+
-      '</div>'+
-      fmtBlock;
+      '</div>';
     scoreEl.style.display='block';
   } else if(scoreEl){
     scoreEl.style.display='none';
@@ -1594,10 +1531,8 @@ function openMatch(idx){
 
 // ── FORM ──
 function openForm(){
-  fSel={p1a:null,p1b:null,p2a:null,p2b:null};selWinner=0;selPts={p1:null,p2:null};selFormato='5';
+  fSel={p1a:null,p1b:null,p2a:null,p2b:null};selWinner=0;selPts={p1:null,p2:null};
   ['wb1','wb2'].forEach(id=>document.getElementById(id).classList.remove('sel'));
-  document.getElementById('fmt5').classList.add('sel');
-  document.getElementById('fmt3').classList.remove('sel');
   ['pts1-in','pts2-in'].forEach(id=>document.getElementById(id).value='');
   const e=document.getElementById('ferr');e.style.display='none';e.textContent='';
   const hint=document.getElementById('winner-hint');if(hint)hint.style.display='none';
@@ -1681,11 +1616,6 @@ function updateWB(){
     if(el)el.innerHTML=faceHTML(fSel[s]);
   });
 }
-function selFmt(f){
-  selFormato=f;
-  document.getElementById('fmt5').classList.toggle('sel',f==='5');
-  document.getElementById('fmt3').classList.toggle('sel',f==='3');
-}
 function selW(n){
   selWinner=n;
   document.getElementById('wb1').classList.toggle('sel',n===1);
@@ -1721,7 +1651,6 @@ async function submitForm(){
     ganador: selWinner===1?'Pareja 1':'Pareja 2',
     pts1: selPts.p1,
     pts2: selPts.p2,
-    formato: selFormato,
     registradaPor: currentPlayer||''
   };
 
