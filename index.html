@@ -564,17 +564,39 @@ function showWelcome(name){
     <div class="sec">Liga Mus Bruselas 38</div>
     <div class="regl-card">
       <div class="regl-row"><span class="regl-icon">📅</span><div><div class="regl-lbl">Temporada</div><div class="regl-val">2026-2027 · 01/09/2026 – 30/06/2027</div></div></div>
-      <div class="regl-row"><span class="regl-icon">💶</span><div><div class="regl-lbl">Entrada</div><div class="regl-val">20 € por persona</div></div></div>
-      <div class="regl-row"><span class="regl-icon">🏆</span><div><div class="regl-lbl">Premio</div><div class="regl-val">120 € el ganador</div></div></div>
+      <div class="regl-row"><span class="regl-icon">💶</span><div><div class="regl-lbl">Entrada</div><div class="regl-val">30 € por persona</div></div></div>
+      <div class="regl-row"><span class="regl-icon">🏆</span><div>
+        <div class="regl-lbl">Premios</div>
+        <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:100px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(232,180,61,0.1);border:1px solid rgba(232,180,61,0.3);border-radius:8px;padding:5px 10px;white-space:nowrap;">
+            <span style="font-size:14px;">🥇</span>
+            <div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:#e8b43d;white-space:nowrap;">150 €</div>
+          </div>
+          <div style="flex:1;min-width:100px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(200,200,200,0.08);border:1px solid rgba(200,200,200,0.25);border-radius:8px;padding:5px 10px;white-space:nowrap;">
+            <span style="font-size:14px;">🥈</span>
+            <div style="font-family:Oswald,sans-serif;font-size:14px;font-weight:700;color:rgba(220,220,220,0.9);white-space:nowrap;">60 €</div>
+          </div>
+        </div>
+      </div></div>
       <div class="regl-row"><span class="regl-icon">🍽️</span><div><div class="regl-lbl">Apuesta adicional</div><div class="regl-val">Los 3 últimos invitan a los 4 primeros a una comida/cena al finalizar la liga</div></div></div>
     </div>
     <div class="sec">Reglas del Juego</div>
     <div class="regl-card">
-      <div class="regl-rule"><span class="regl-num">1</span><div>Las partidas solo podrán ser apuntadas el mismo día que se hayan disputado.</div></div>
+      <div class="regl-rule"><span class="regl-num">1</span><div>El ganador de la liga será aquel que tenga un mayor porcentaje (ver "Sistema de Puntos 2026-2027").</div></div>
       <div class="regl-rule"><span class="regl-num">2</span><div>Para contabilizar, la partida debe ser jugada por al menos 3 jugadores de la liga.</div></div>
       <div class="regl-rule"><span class="regl-num">3</span><div>Para poder puntuar en la liga, deberás disputar un mínimo de 50 partidas.</div></div>
-      <div class="regl-rule"><span class="regl-num">4</span><div>Si un jugador acumula más de 3 semanas sin participar en una partida, se le restarán 3 partidas ganadas de su historial.</div></div>
-      <div class="regl-rule"><span class="regl-num">5</span><div>El ganador de la liga será aquel que tenga un mayor porcentaje (ver "Sistema de Puntos 2026-2027").</div></div>
+      <div class="regl-rule"><span class="regl-num">4</span><div>Las partidas solo podrán ser apuntadas el mismo día que se hayan disputado.</div></div>
+      <div class="regl-rule"><span class="regl-num">5</span><div>
+        Si un jugador acumula más de 3 semanas sin participar en una partida, se le restarán 3 partidas ganadas de su historial.
+        <div style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.5);">No cuentan como semanas de sanción:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+          <div style="background:rgba(58,175,92,0.1);border:1px solid rgba(58,175,92,0.25);border-radius:8px;padding:6px 10px;font-size:11px;">🎄 <strong>Navidad</strong><br><span style="color:rgba(255,255,255,0.5);font-size:10px;">18 dic 2026 – 11 ene 2027</span></div>
+          <div style="background:rgba(58,175,92,0.1);border:1px solid rgba(58,175,92,0.25);border-radius:8px;padding:6px 10px;font-size:11px;">✝️ <strong>Semana Santa</strong><br><span style="color:rgba(255,255,255,0.5);font-size:10px;">21 – 28 marzo 2027</span></div>
+          <div style="background:rgba(58,175,92,0.1);border:1px solid rgba(58,175,92,0.25);border-radius:8px;padding:6px 10px;font-size:11px;">🎪 <strong>Feria</strong><br><span style="color:rgba(255,255,255,0.5);font-size:10px;">13 – 18 abril 2027</span></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.6);">Tampoco se sancionará cuando la causa de ausencia se presente al resto del grupo y sea aprobada por mayoría del resto de jugadores.</div>
+      </div></div>
+      <div class="regl-rule"><span class="regl-num">6</span><div>Durante la partida, si se quedan puntos sin contar, una vez se han recogido las cartas no se podrán contar a posteriori bajo ningún concepto.</div></div>
     </div>
     <div class="sec">Estado de Jugadores</div>
     <div class="regl-hint">Días desde la última partida registrada</div>
@@ -826,7 +848,23 @@ function renderReglamento(){
     else if(p.days>=21){badge='🚨 '+p.days+' días — PENALIZACIÓN';badgeClass='danger';dateStr=p.lastDate.toLocaleDateString('es-ES');}
     else if(p.days>=14){badge='⚠️ '+p.days+' días — Aviso';badgeClass='warn';dateStr=p.lastDate.toLocaleDateString('es-ES');}
     else{badge='✓ '+p.days+' días';badgeClass='ok';dateStr=p.lastDate?p.lastDate.toLocaleDateString('es-ES'):'—';}
-    return '<div class="regl-player-row"><div class="regl-pav">'+avHTML(p.name)+'</div><div style="flex:1"><div class="regl-pname">'+p.name+'</div><div class="regl-pdate">Último: '+dateStr+'</div></div><span class="regl-pbadge '+badgeClass+'">'+badge+'</span></div>';
+    const bar=(()=>{
+      if(p.days===null)return '';
+      const pct=Math.min(p.days/21*100,100);
+      const col=p.days>=21?'#e74c3c':p.days>=14?'#e8a33d':'#3aaf5c';
+      return '<div style="margin-top:8px;">'+
+        '<div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.08);overflow:hidden;">'+
+          '<div style="height:100%;width:'+pct.toFixed(0)+'%;background:'+col+';border-radius:3px;transition:width 0.3s;"></div>'+
+        '</div>'+
+        '<div style="display:flex;justify-content:space-between;margin-top:3px;">'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">&lt;1 sem</span>'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">1 sem</span>'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">2 sem</span>'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">3 sem</span>'+
+        '</div>'+
+      '</div>';
+    })();
+    return '<div class="regl-player-row" style="flex-wrap:wrap;"><div class="regl-pav">'+avHTML(p.name)+'</div><div style="flex:1;min-width:0;"><div class="regl-pname">'+p.name+'</div><div class="regl-pdate">Último: '+dateStr+'</div></div><span class="regl-pbadge '+badgeClass+'">'+badge+'</span>'+(bar?'<div style="width:100%;flex-basis:100%;">'+bar+'</div>':'')+'</div>';
   }).join('')+'</div>';
 }
 
@@ -1097,7 +1135,7 @@ function renderPartidas(){
   const ab=document.getElementById('alert-banner');const ml=document.getElementById('matches-list');
   if(!rows.length){ab.innerHTML='';ml.innerHTML='<div class="empty-matches">🃏<br><br>No hay partidas registradas aún.</div>';return;}
   const lastRow=rows[rows.length-1];const days=daysSince(lastRow.fecha);
-  if(days!==null&&days>=14){const left=21-days;if(days>=21)ab.innerHTML='<div class="alert-banner danger"><div class="alert-icon">🚨</div><div class="alert-text"><strong>¡'+days+' días sin jugar!</strong>Habéis superado el límite de 3 semanas.</div></div>';else ab.innerHTML='<div class="alert-banner warning"><div class="alert-icon">⚠️</div><div class="alert-text"><strong>'+left+' días para el límite</strong>Lleváis '+days+' días sin jugar.</div></div>';}else ab.innerHTML='';
+  if(days!==null&&days>=14){const left=21-days;if(days>=21)ab.innerHTML='<div class="alert-banner danger"><div class="alert-icon">🚨</div><div class="alert-text"><strong>¡Toda la liga lleva '+days+' días sin jugar!</strong>Habéis superado el límite de 3 semanas.</div></div>';else ab.innerHTML='<div class="alert-banner warning"><div class="alert-icon">⚠️</div><div class="alert-text"><strong>Toda la liga lleva '+days+' días sin jugar</strong>Quedan '+left+' días para el límite de 3 semanas.</div></div>';}else ab.innerHTML='';
   ml.innerHTML=[...rows].reverse().slice(0,30).map((row,ri)=>{const idx=rows.length-1-ri;const p1w=row.ganador==='Pareja 1';const d=daysSince(row.fecha);const ago=agoLabel(d);const ds=row.fecha?fmtDate(row.fecha):'—';return '<div class="mcard" onclick="openMatch('+idx+')"><div class="mmeta"><span class="mmeta-date">'+ds+'</span><span class="mmeta-ago '+ago.c+'">'+ago.t+'</span></div><div class="mbody"><div class="mteam"><div class="mnames '+(p1w?'win':'')+'">'+row.p1a+'<br>'+row.p1b+'</div>'+(p1w?'<span class="wtag">GANADORES</span>':'')+'</div><div class="mscorec"><div class="mscore">'+row.pts1+'<span style="color:rgba(255,255,255,0.2);font-size:14px"> · </span>'+row.pts2+'</div><div class="mscore-lbl">PTS</div></div><div class="mteam-r"><div class="mnames '+(!p1w?'win':'')+'"><span style="display:block;text-align:right">'+row.p2a+'</span><span style="display:block;text-align:right">'+row.p2b+'</span></div>'+(!p1w?'<div style="text-align:right"><span class="wtag">GANADORES</span></div>':'')+'</div></div>'+(row.registradaPor?'<div style="text-align:right;font-size:9px;color:rgba(255,255,255,0.22);padding:2px 4px 0;">Registrada por '+row.registradaPor+'</div>':'')+'</div>';}).join('');
 }
 
