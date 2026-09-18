@@ -522,9 +522,9 @@ function showWelcome(name){
 
   <div class="tab-panel" id="tab-partidas">
     <div id="alert-banner"></div>
-    <div style="display:flex;gap:8px;margin-bottom:12px;">
+    <div style="display:flex;gap:8px;margin-bottom:12px;margin-top:16px;">
       <button class="htab active" id="ptab-btn-detalle" onclick="setPartidasTab('detalle',this)">Detalle de Partidas</button>
-      <button class="htab" id="ptab-btn-resumen" onclick="setPartidasTab('resumen',this)">Resumen del Día</button>
+      <button class="htab" id="ptab-btn-resumen" onclick="setPartidasTab('resumen',this)">Resumen del día</button>
     </div>
     <div id="ptab-detalle">
     <div id="matches-list"></div>
@@ -1203,18 +1203,20 @@ function toggleDaySession(si){
       });
     });
     el.innerHTML=Object.entries(stat).sort((a,b)=>(b[1].g/b[1].j)-(a[1].g/a[1].j)||b[1].j-a[1].j).map(([name,s])=>
-      '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;">'+
+      '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;cursor:pointer;" onclick="event.stopPropagation();openPlayerDayMatches(\''+name+'\','+si+')">'+
         '<div class="cav-sm">'+avHTML(name)+'</div>'+
         '<div style="flex:1;font-size:13px;">'+name+'</div>'+
-        '<div style="display:flex;gap:6px;">'+
-          '<div style="cursor:pointer;background:rgba(58,175,92,0.12);border-radius:6px;padding:3px 8px;text-align:center;" onclick="event.stopPropagation();openPlayerDayMatches(\''+name+'\',\'win\','+si+')"><span style="color:var(--va);font-weight:700;font-size:12px;">'+s.g+'</span><span style="font-size:9px;color:rgba(255,255,255,0.4);"> G</span></div>'+
-          '<div style="cursor:pointer;background:rgba(229,115,115,0.12);border-radius:6px;padding:3px 8px;text-align:center;" onclick="event.stopPropagation();openPlayerDayMatches(\''+name+'\',\'loss\','+si+')"><span style="color:#e57373;font-weight:700;font-size:12px;">'+(s.j-s.g)+'</span><span style="font-size:9px;color:rgba(255,255,255,0.4);"> P</span></div>'+
+        '<div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:5px 10px;text-align:center;">'+
+          '<span style="color:var(--va);font-weight:700;font-size:13px;">'+s.g+'</span><span style="font-size:10px;color:rgba(255,255,255,0.45);"> ganadas</span>'+
+          '<span style="color:rgba(255,255,255,0.2);margin:0 4px;">·</span>'+
+          '<span style="color:#e57373;font-weight:700;font-size:13px;">'+(s.j-s.g)+'</span><span style="font-size:10px;color:rgba(255,255,255,0.45);"> perdidas</span>'+
+          '<div style="font-size:8px;color:rgba(255,255,255,0.3);margin-top:1px;">toca para ver</div>'+
         '</div>'+
       '</div>').join('');
     el.dataset.filled='1';
   }
 }
-function openPlayerDayMatches(name,type,si){
+function openPlayerDayMatches(name,si){
   const sess=window._daySessions[si];
   const wins=[],losses=[];
   sess.rows.forEach(row=>{
@@ -1228,16 +1230,20 @@ function openPlayerDayMatches(name,type,si){
     const obj={date:ds,teammate:teammates[0]||'—',rivals,score:row.pts1+' · '+row.pts2};
     if(won)wins.push(obj);else losses.push(obj);
   });
-  const isWin=type==='win';
-  const list=isWin?wins:losses;
-  const color=isWin?'var(--va)':'#e57373';
   document.getElementById('mm-player-title').textContent=name;
-  document.getElementById('mm-player-sub').textContent=isWin?'PARTIDAS GANADAS ('+wins.length+')':'PARTIDAS PERDIDAS ('+losses.length+')';
-  document.getElementById('mm-player-sub').style.color=color;
+  document.getElementById('mm-player-sub').textContent='RESUMEN DEL DÍA';
+  document.getElementById('mm-player-sub').style.color='rgba(255,255,255,0.5)';
+  const col=(list,color,label)=>'<div style="flex:1;min-width:0;">'+
+    '<div style="font-size:10px;font-weight:700;color:'+color+';text-align:center;padding:6px 0;text-transform:uppercase;letter-spacing:0.5px;">'+label+' ('+list.length+')</div>'+
+    (list.length?list.map(m=>'<div style="padding:6px 4px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:10px;"><div style="color:'+color+';font-weight:700;font-size:12px;">'+m.score+'</div><div style="color:rgba(255,255,255,0.35);font-size:9px;margin:2px 0;">'+m.date+'</div><div style="color:rgba(255,255,255,0.6);line-height:1.4;">Con <strong>'+m.teammate+'</strong><br>vs '+m.rivals.join(' & ')+'</div></div>').join(''):
+    '<div style="color:rgba(255,255,255,0.2);font-size:10px;text-align:center;padding:16px 4px;">Ninguna</div>')+
+  '</div>';
   document.getElementById('mm-player-list').innerHTML=
-    list.length?'<div style="background:rgba(0,0,0,0.18);border-radius:8px;border:1px solid rgba(0,0,0,0.3);max-height:380px;overflow-y:auto;">'+
-    list.map(m=>'<div class="pmatch-item"><span class="pmatch-score" style="color:'+color+'">'+m.score+'</span><div class="pmatch-date">'+m.date+'</div><div class="pmatch-teams">Con <strong>'+m.teammate+'</strong> vs '+m.rivals.join(' & ')+'</div></div>').join('')+
-    '</div>':'<div style="color:rgba(255,255,255,0.25);font-size:13px;text-align:center;padding:24px;">Sin '+(isWin?'victorias':'derrotas')+' ese día</div>';
+    '<div style="display:flex;gap:1px;background:rgba(0,0,0,0.3);border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,0.3);max-height:400px;overflow-y:auto;">'+
+      col(wins,'var(--va)','Ganadas')+
+      '<div style="width:1px;background:rgba(255,255,255,0.06);flex-shrink:0;"></div>'+
+      col(losses,'#e57373','Perdidas')+
+    '</div>';
   document.getElementById('matchesModal').classList.add('open');
 }
 function renderPartidas(){
