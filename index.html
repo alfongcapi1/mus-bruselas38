@@ -522,8 +522,16 @@ function showWelcome(name){
 
   <div class="tab-panel" id="tab-partidas">
     <div id="alert-banner"></div>
-    <div class="sec">Detalle de Partidas</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <button class="htab active" id="ptab-btn-detalle" onclick="setPartidasTab('detalle',this)">Detalle de Partidas</button>
+      <button class="htab" id="ptab-btn-resumen" onclick="setPartidasTab('resumen',this)">Resumen del Día</button>
+    </div>
+    <div id="ptab-detalle">
     <div id="matches-list"></div>
+    </div>
+    <div id="ptab-resumen" style="display:none">
+    <div id="day-summary-list"></div>
+    </div>
   </div>
 
   <div class="tab-panel" id="tab-stats">
@@ -1124,6 +1132,114 @@ function renderClassTable(pl,id,arrow,showAll,showBadge){
     '</div>';}).join('');
 }
 
+function setPartidasTab(tab,btn){
+  document.querySelectorAll('#ptab-detalle,#ptab-resumen').forEach(el=>el.style.display='none');
+  document.getElementById('ptab-'+tab).style.display='block';
+  document.querySelectorAll('#tab-partidas .htab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(tab==='resumen')renderDaySummary();
+}
+function parseFullTS(raw){
+  if(!raw)return null;
+  const s=raw.toString().trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(s)){
+    const d=new Date(s.replace(' ','T'));
+    return isNaN(d)?null:d;
+  }
+  let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}),?\s*(\d{1,2}):(\d{2})(:(\d{2}))?/);
+  if(m)return new Date(+m[3],+m[2]-1,+m[1],+m[4],+m[5],+(m[7]||0));
+  m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m)return new Date(+m[3],+m[2]-1,+m[1],12,0,0);
+  return null;
+}
+function getSessions(){
+  const GAP_MS=8*3600*1000; // partidas separadas por menos de 8h cuentan como la misma sesión/día
+  const parsed=rows.map(r=>({...r,_ts:parseFullTS(r.fecha)})).filter(r=>r._ts);
+  parsed.sort((a,b)=>a._ts-b._ts);
+  const sessions=[];
+  let current=null;
+  parsed.forEach(r=>{
+    if(!current||(r._ts-current.lastTs)>GAP_MS){current={startTs:r._ts,lastTs:r._ts,rows:[r]};sessions.push(current);}
+    else{current.rows.push(r);current.lastTs=r._ts;}
+  });
+  return sessions;
+}
+function renderDaySummary(){
+  const el=document.getElementById('day-summary-list');
+  if(!el)return;
+  if(!rows.length){el.innerHTML='<div class="empty-matches">🃏<br><br>No hay partidas registradas aún.</div>';return;}
+  const sessions=getSessions().slice().reverse();
+  window._daySessions=sessions;
+  el.innerHTML=sessions.map((sess,si)=>{
+    let dl=sess.startTs.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+    dl=dl.charAt(0).toUpperCase()+dl.slice(1);
+    return '<div class="mcard" style="cursor:pointer;" onclick="toggleDaySession('+si+')" id="day-card-'+si+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;">'+
+        '<div style="font-family:Oswald,sans-serif;font-size:15px;font-weight:700;">'+dl+'</div>'+
+        '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+sess.rows.length+' partida'+(sess.rows.length>1?'s':'')+' <span id="day-arrow-'+si+'">›</span></div>'+
+      '</div>'+
+      '<div id="day-session-detail-'+si+'" style="display:none;margin-top:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;"></div>'+
+    '</div>';
+  }).join('');
+}
+function toggleDaySession(si){
+  const el=document.getElementById('day-session-detail-'+si);
+  const arrow=document.getElementById('day-arrow-'+si);
+  if(!el)return;
+  const isOpen=el.style.display!=='none';
+  el.style.display=isOpen?'none':'block';
+  if(arrow)arrow.textContent=isOpen?'›':'⌄';
+  if(!isOpen&&!el.dataset.filled){
+    const sess=window._daySessions[si];
+    const stat={};
+    sess.rows.forEach(r=>{
+      const p1w=r.ganador==='Pareja 1';
+      [{pl:[r.p1a,r.p1b],win:p1w},{pl:[r.p2a,r.p2b],win:!p1w}].forEach(t=>{
+        t.pl.forEach(p=>{
+          if(!REAL.includes(p))return;
+          if(!stat[p])stat[p]={g:0,j:0};
+          stat[p].j++;if(t.win)stat[p].g++;
+        });
+      });
+    });
+    el.innerHTML=Object.entries(stat).sort((a,b)=>(b[1].g/b[1].j)-(a[1].g/a[1].j)||b[1].j-a[1].j).map(([name,s])=>
+      '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;">'+
+        '<div class="cav-sm">'+avHTML(name)+'</div>'+
+        '<div style="flex:1;font-size:13px;">'+name+'</div>'+
+        '<div style="display:flex;gap:6px;">'+
+          '<div style="cursor:pointer;background:rgba(58,175,92,0.12);border-radius:6px;padding:3px 8px;text-align:center;" onclick="event.stopPropagation();openPlayerDayMatches(\''+name+'\',\'win\','+si+')"><span style="color:var(--va);font-weight:700;font-size:12px;">'+s.g+'</span><span style="font-size:9px;color:rgba(255,255,255,0.4);"> G</span></div>'+
+          '<div style="cursor:pointer;background:rgba(229,115,115,0.12);border-radius:6px;padding:3px 8px;text-align:center;" onclick="event.stopPropagation();openPlayerDayMatches(\''+name+'\',\'loss\','+si+')"><span style="color:#e57373;font-weight:700;font-size:12px;">'+(s.j-s.g)+'</span><span style="font-size:9px;color:rgba(255,255,255,0.4);"> P</span></div>'+
+        '</div>'+
+      '</div>').join('');
+    el.dataset.filled='1';
+  }
+}
+function openPlayerDayMatches(name,type,si){
+  const sess=window._daySessions[si];
+  const wins=[],losses=[];
+  sess.rows.forEach(row=>{
+    const inP1=row.p1a===name||row.p1b===name;
+    const inP2=row.p2a===name||row.p2b===name;
+    if(!inP1&&!inP2)return;
+    const won=(inP1&&row.ganador==='Pareja 1')||(inP2&&row.ganador==='Pareja 2');
+    const teammates=(inP1?[row.p1a,row.p1b]:[row.p2a,row.p2b]).filter(n=>n!==name);
+    const rivals=inP1?[row.p2a,row.p2b]:[row.p1a,row.p1b];
+    const ds=row._ts?row._ts.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}):'—';
+    const obj={date:ds,teammate:teammates[0]||'—',rivals,score:row.pts1+' · '+row.pts2};
+    if(won)wins.push(obj);else losses.push(obj);
+  });
+  const isWin=type==='win';
+  const list=isWin?wins:losses;
+  const color=isWin?'var(--va)':'#e57373';
+  document.getElementById('mm-player-title').textContent=name;
+  document.getElementById('mm-player-sub').textContent=isWin?'PARTIDAS GANADAS ('+wins.length+')':'PARTIDAS PERDIDAS ('+losses.length+')';
+  document.getElementById('mm-player-sub').style.color=color;
+  document.getElementById('mm-player-list').innerHTML=
+    list.length?'<div style="background:rgba(0,0,0,0.18);border-radius:8px;border:1px solid rgba(0,0,0,0.3);max-height:380px;overflow-y:auto;">'+
+    list.map(m=>'<div class="pmatch-item"><span class="pmatch-score" style="color:'+color+'">'+m.score+'</span><div class="pmatch-date">'+m.date+'</div><div class="pmatch-teams">Con <strong>'+m.teammate+'</strong> vs '+m.rivals.join(' & ')+'</div></div>').join('')+
+    '</div>':'<div style="color:rgba(255,255,255,0.25);font-size:13px;text-align:center;padding:24px;">Sin '+(isWin?'victorias':'derrotas')+' ese día</div>';
+  document.getElementById('matchesModal').classList.add('open');
+}
 function renderPartidas(){
   const ab=document.getElementById('alert-banner');const ml=document.getElementById('matches-list');
   if(!rows.length){ab.innerHTML='';ml.innerHTML='<div class="empty-matches">🃏<br><br>No hay partidas registradas aún.</div>';return;}
