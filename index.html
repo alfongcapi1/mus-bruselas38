@@ -862,10 +862,26 @@ function renderReglamento(){
   el.innerHTML='<div class="regl-player-wrap">'+sorted.map(p=>{
     let badge,badgeClass,dateStr;
     if(p.days===null){badge='Sin partidas';badgeClass='ok';dateStr='—';}
-    else if(p.days>=21){badge='🚨 '+p.days+' días — PENALIZACIÓN';badgeClass='danger';dateStr=p.lastDate.toLocaleDateString('es-ES');}
+    else if(p.days>=21){badge='Más de 3 semanas → Castigo';badgeClass='danger';dateStr=p.lastDate.toLocaleDateString('es-ES');}
     else if(p.days>=14){badge='⚠️ '+p.days+' días — Aviso';badgeClass='warn';dateStr=p.lastDate.toLocaleDateString('es-ES');}
     else{badge='✓ '+p.days+' días';badgeClass='ok';dateStr=p.lastDate?p.lastDate.toLocaleDateString('es-ES'):'—';}
-    return '<div class="regl-player-row"><div class="regl-pav">'+avHTML(p.name)+'</div><div style="flex:1"><div class="regl-pname">'+p.name+'</div><div class="regl-pdate">Último: '+dateStr+'</div></div><span class="regl-pbadge '+badgeClass+'">'+badge+'</span></div>';
+    const bar=(()=>{
+      if(p.days===null)return '';
+      const d=p.days;
+      const seg1=Math.min(Math.max(d,0),7)/7*100;
+      const seg2=Math.min(Math.max(d-7,0),7)/7*100;
+      const seg3=Math.min(Math.max(d-14,0),7)/7*100;
+      const segHTML=(pct,col)=>'<div style="flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,0.08);overflow:hidden;"><div style="height:100%;width:'+pct.toFixed(0)+'%;background:'+col+';border-radius:3px;transition:width 0.3s;"></div></div>';
+      return '<div style="margin-top:8px;">'+
+        '<div style="display:flex;gap:4px;">'+segHTML(seg1,'#3aaf5c')+segHTML(seg2,'#e8a33d')+segHTML(seg3,'#e74c3c')+'</div>'+
+        '<div style="display:flex;justify-content:space-between;margin-top:3px;">'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">1 sem</span>'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">2 sem</span>'+
+          '<span style="font-size:8px;color:rgba(255,255,255,0.3);">3 sem</span>'+
+        '</div>'+
+      '</div>';
+    })();
+    return '<div class="regl-player-row" style="flex-wrap:wrap;"><div class="regl-pav">'+avHTML(p.name)+'</div><div style="flex:1;min-width:0;"><div class="regl-pname">'+p.name+'</div><div class="regl-pdate">Último: '+dateStr+'</div></div><span class="regl-pbadge '+badgeClass+'">'+badge+'</span>'+(bar?'<div style="width:100%;flex-basis:100%;">'+bar+'</div>':'')+'</div>';
   }).join('')+'</div>';
 }
 
